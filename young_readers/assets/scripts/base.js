@@ -1,7 +1,7 @@
 mainApp.constant("appConstants", {
     'homePath': '/',
     'loginPath': '/login/',
-    'apiPath' : '/webservices/api/1/',
+    'apiPath' : '/api/',
     'templateDir' : 'partials/',
     'imageDir' : 'images/',
 });
@@ -20,7 +20,16 @@ mainApp.controller('baseController',['$scope','Constants','$location','growl','$
 // Home Controller
 mainApp.controller('homeController',['$scope','Constants','$timeout','$http','growl',
     function($scope,Constants,$timeout,$http,growl){
-    	
+    	var options = {
+                'method': 'GET',
+                'url': '/api/books/'
+            };
+            $http(options).success(function(data){
+                $scope.books = data;
+                console.log(data);
+            }).error(function(data){
+
+            });
 }]);
 
 // Test Controller
