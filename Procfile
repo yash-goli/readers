@@ -1,0 +1,1 @@
+web: cd young_readers && gunicorn young_readers.wsgi -b  "0.0.0.0:$PORT"

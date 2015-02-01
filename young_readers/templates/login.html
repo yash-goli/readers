@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login | Sunrise SupportHub</title>
+	<link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+</head>
+<body>
+	<header>
+		<div class="row">
+			<div class="col-4">
+				<h2 class="f-20">
+					<span class="f-orange">Young</span> Readers
+				</h2>
+			</div>
+		</div>
+	</header>
+	<section class="login-wrap">
+		<div class="container full-h">
+			<div class="col-4 p-0 xy-center b-white bs">
+				<div class="col-12 b-orange f-white p-5 txt-c">
+					<h1 class="f-20">Login</h1>
+				</div>
+				<div class="col-12">
+					<form action="/login/" method="POST" class="clearfix">
+						{% csrf_token %}
+						<div class="col-12 pt-10 mt-10 pb-10 b-trans">
+							<input type="text" id="username" name="username" class="field-light p-5 full-w" />
+							<label>Username</label>
+						</div>
+						<div class="col-12 pt-10 pb-10 b-trans">
+							<input type="password" id="password" name="password" class="field-light p-5 full-w"/>
+							<label>Password</label>
+						</div>
+						<div class="col-12 txt-c pb-10">
+							<input type="submit" id="login_btn" value="Sign In" class="btn b-orange f-white" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<script type="text/javascript" src="{% static "js/external.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/internal.js" %}"></script>
+</body>
+</html>

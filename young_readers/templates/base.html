@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" ng-app="mainApp" ng-csp>
+<head>
+	<title>Library Kart</title>
+	<link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+</head>
+<body ng-controller="mainController" class="home">
+    <div class="base" ng-controller="baseController">
+        <!-- Header -->
+        {% block header %}
+            {% include "header.html" %}
+        {% endblock %}
+        <!-- Header END -->
+        <!-- Main Content -->
+        {% block mainContent %}
+            <div class="maincontent" ng-view autoscroll="true"></div>
+        {% endblock %}
+        <!-- Main Content END -->
+        <!-- Footer -->
+        {% block footer %} 
+            {% include "footer.html" %}
+        {% endblock %}
+        <!-- Footer END -->
+    </div>
+    <!-- Loading Symbol -->
+    <div id="loading">
+        <i class="loading-icon"></i>
+    </div>
+    <!-- Load Symbol END -->
+</body>
+<!-- footer -->
+{% block scripts %}
+    {% include "scripts.html" %}
+{% endblock %}
+<!-- footer END -->
+</html>
