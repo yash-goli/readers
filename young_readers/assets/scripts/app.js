@@ -21,7 +21,6 @@ mainApp.config(['$interpolateProvider','$httpProvider',
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
-
 mainApp.run(['$http','$cookies','editableOptions',
     function($http, $cookies,editableOptions) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
@@ -166,6 +165,71 @@ mainApp.factory('transformRequestAsFormPost',[
             return(source);         
         }
 }]);
+
+
+mainApp.factory('books', ['$http', '$q', 'Constants', function($http, $q, Constants){
+    var books = {};
+    books.create = function (data) {
+        console.log(data);
+    };
+    books.read = function(ID){
+        var deferer = $q.defer();
+        var promise = deferer.promise;
+        var options = {
+            'method': 'GET',
+            'url': '/api/books/'
+        };
+        if(ID){
+            options.url = options.url + ID + "/";
+        }
+        $http(options).success(function(data){
+            var out = {};
+            out.status = 'success';
+            if(data.length)
+                out.result = data;
+            else{
+                out.result = [data];
+            }
+
+            deferer.resolve(out);
+        }).error(function(data){
+            var out = {};
+            out.status = 'error';
+            out.result = data;
+            deferer.resolve(data);
+        });
+        return promise;
+    };
+
+    books.update = function(ID, data){
+
+    };
+
+    books.delete = function(ID){
+
+    };
+
+    books.search = function(params){
+
+    };
+
+    return{
+        'read':books.read,
+        'update':books.update,
+        'delete':books.delete,
+        'search':books.search,
+        'create':books.create,
+    }
+
+}]);
+
+mainApp.factory('transactions', ['$scope', 'Constants', function(){
+
+
+
+}]);
+
+
 
 
 /* mainApp Generic Controller */

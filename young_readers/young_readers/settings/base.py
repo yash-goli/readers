@@ -58,7 +58,9 @@ ROOT_URLCONF = 'young_readers.urls'
 
 WSGI_APPLICATION = 'young_readers.wsgi.application'
 
-
+AMAZON_ACCESS_ID = 'AKIAIUBSHL2RLWAWYEGA'
+AMAZON_SECRET_ID = 'IcO1NJZ2nh3CJ3FI006XuAkZhT1e29SDXr50hZ87'
+AMAZON_ASSOCIATE_TAG = 'yorecl-20'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 

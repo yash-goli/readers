@@ -1,22 +1,28 @@
 <div class="container">
-
-<h1>Books</h1>
-<hr class="line">
-<div class="books">
-	<div class="book col-2" ng-repeat="book in books">
-		ISBN:&nbsp;<b>{[book.ISBN]}</b><br />
-		Title:&nbsp;<b>{[book.title]}</b><br />
-		Author:&nbsp;<b>{[book.author]}</b><br />
-		Publisher:&nbsp;<b>{[book.subject]}</b><br />
-		Publisher:&nbsp;<b>{[book.publisher]}</b><br />
-		Item Type:&nbsp;<b>{[book.item_type]}</b><br />
-		Cover Type:&nbsp;<b>{[book.cover_type]}</b><br />
-		Available Count:&nbsp;<b>{[book.available_count]}</b><br />
-		Total Count:&nbsp;<b>{[book.total_count]}</b><br />
-		Image:&nbsp;<b>{[book.image]}</b><br />
+	<h1>Books</h1>
+	<div class="row txt-c">
+		 <input type="text" ng-model="isbn">
+		 <button ng-click="getBookData()">get book</button>
 	</div>
-</div>
 
-<div class="no-books" ng-if="books.length == 0">
-	<h1 class="txt-center">No Books Available</h1>
+	<hr class="line">
+	<div class="books">
+		<div class="book col-2" >
+			<img src="{[image]}" ng-repeat="image in images track by $index">
+			<!-- ISBN:&nbsp;<b>{[book.ISBN]}</b><br />
+			Title:&nbsp;<b>{[book.title]}</b><br />
+			Author:&nbsp;<b>{[book.author]}</b><br />
+			Publisher:&nbsp;<b>{[book.subject]}</b><br />
+			Publisher:&nbsp;<b>{[book.publisher]}</b><br />
+			Item Type:&nbsp;<b>{[book.item_type]}</b><br />
+			Cover Type:&nbsp;<b>{[book.cover_type]}</b><br />
+			Available Count:&nbsp;<b>{[book.available_count]}</b><br />
+			Total Count:&nbsp;<b>{[book.total_count]}</b><br />
+			Image:&nbsp;<b>{[book.image]}</b><br /> -->
+		</div>
+	</div>
+
+	<div class="no-books" ng-if="books.length == 0">
+		<h1 class="txt-center">No Books Available</h1>
+	</div>
 </div>

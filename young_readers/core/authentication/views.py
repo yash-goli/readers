@@ -38,7 +38,7 @@ def userLogout(request):
 
 
 def if_partial_url(url):
-    partial_urls = ['/test']
+    partial_urls = ['/books']
     proceed = False
     for purl in partial_urls:
         if url.startswith(purl):
