@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from api import Amazon
 import requests, xmltodict, json
 from django.conf import settings
-
+import collections
 # Create your views here.
 def get_book_data(request):
     isbn_urls = {
@@ -13,13 +13,93 @@ def get_book_data(request):
 
     SERVICE_DOMAINS = ['US', 'IN', 'UK', 'CA', 'CN', 'DE', 'ES', 'FR', 'IT', 'JP']
 
-    data = {}
+    data = {
+        'image' : '',
+        'title' : '',
+        'publisher' : '',
+        'isbn_10' : '',
+        'isbn_13' : '',
+        'description' : '',
+        'author' : '',
+        'subject' : [],
+    }
 
-    for url in isbn_urls:
-        data[url] = isbn_urls[url] + request.GET['isbn']
-        data[url] = requests.get(data[url])
-        data[url] = data[url].json()
+    domain_status = {
+        'amazon' : False,
+        'google' : False,
+        'isbndb' : False, 
+    }
+    
+    def from_amazon(book):
+        desc = ""
+        data['image'] = book['LargeImage']['URL']
+        data["title"] = book["ItemAttributes"]["Title"]
+        data["publisher"] = book["ItemAttributes"]["Publisher"]
+        data["isbn_13"] = book["ItemAttributes"]["EAN"]
+        data["isbn_10"] = book["ItemAttributes"]["ISBN"]
+        data["author"] = book["ItemAttributes"]["Author"]
+        data["more"] = book["DetailPageURL"]
 
+        if "EditorialReviews" in book:
+            if type(book["EditorialReviews"]["EditorialReview"]) == collections.OrderedDict:
+                data["description"] = book["EditorialReviews"]["EditorialReview"]["Content"]
+            else:
+                for content in book["EditorialReviews"]["EditorialReview"]:
+                    desc = desc + content["Content"]
+
+        if 'BrowseNodes' in book:
+            if type(book["BrowseNodes"]["BrowseNode"]) == collections.OrderedDict:
+                data['subject'].append(get_tags(nodes)[1:])
+            else:
+                for nodes in book["BrowseNodes"]["BrowseNode"]:
+                    data['subject'].append(get_tags(nodes)[1:])
+
+    def from_google(book):
+        data['image'] = book['imageLinks']['thumbnail']
+
+        if "subtitle" in book:
+            data["title"] = book["title"] + " " + book["subtitle"]
+        else:
+            data["title"] = book["title"]
+
+        data["publisher"] = book["publisher"]
+        data["description"] = book["description"]
+
+        for identifier in book["industryIdentifiers"]:
+            if identifier['type'] == "ISBN_10":
+                data["isbn_10"] = identifier["identifier"]
+            if identifier['type'] == "ISBN_13":
+                data["isbn_13"] = identifier["identifier"]
+
+        if len(book["authors"]) == 1:
+            data["author"] = book["authors"][0]
+        else:
+            data["author"] = []
+            for author in book["authors"]:
+                data["author"].append(author)
+
+        if 'categories' in book:
+            for category in book['categories']:
+                data['subject'].append(category)
+
+        data["more"] = book["previewLink"]
+
+    def from_isbndb(book):
+        data["title"] = book["title"]
+        data["isbn_10"] = book["isbn10"]
+        data["isbn_13"] = book["isbn13"]
+        data["description"] = book["summary"]
+        data['publisher'] = book["publisher_name"]
+        for category in book['subject_ids']:
+            data['subject'].append(category.replace("_", " "))
+
+        if len(book["author_data"]) == 1:
+            data["author"] = book[0]["name"]
+        else:
+            data["author"] = []
+            for author in book['author_data']:
+                data["author"] = author["name"]
+    
     for domain in SERVICE_DOMAINS:
         amazon = Amazon(settings.AMAZON_ACCESS_ID, settings.AMAZON_SECRET_ID, settings.AMAZON_ASSOCIATE_TAG,Version = "2013-08-01", Region = domain)
         try:
@@ -34,6 +114,41 @@ def get_book_data(request):
             
         if 'Item' in toJSON['ItemLookupResponse']['Items']:
             break
-    data['amazon'] = toJSON
-    del data['amazon']['ItemLookupResponse']['OperationRequest']
+    
+    items = toJSON['ItemLookupResponse']['Items']['Item']
+
+    if type(items) == collections.OrderedDict:
+        from_amazon(items)
+        domain_status['amazon'] = True
+
+    if domain_status['amazon'] == False:
+        toJSON = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+request.GET['isbn'])
+        toJSON = toJSON.json()
+        if toJSON['totalItems'] != 0:
+            from_google(toJSON['items'][0]['volumeInfo'])
+            domain_status['google'] = True
+
+    if domain_status['amazon'] == False and domain_status['google'] == False:
+        toJSON = requests.get("http://isbndb.com/api/v2/json/WRENAJ6U/book/"+request.GET['isbn'])
+        toJSON = toJSON.json()
+        if 'error' not in toJSON:
+            from_isbndb(toJSON['data'][0])
+            domain_status['isbndb'] = True
+    
+    if domain_status['amazon'] == False and domain_status['google'] == False and domain_status['isbndb'] == False:
+        data = {
+            'error' : 'Unable to Find Data in any of our sources,Enter field manually'
+        }
     return HttpResponse(json.dumps(data))
+
+def get_tags(nodes):
+    non_tags = ["Books","Subjects"]
+    if 'Ancestors' in nodes:
+        if not nodes['Name'] in non_tags:
+            tags = nodes['Name']
+            tags = get_tags(nodes['Ancestors']['BrowseNode']) + "-" + tags
+        else:
+            tags = ""
+    else:
+        tags = nodes['Name']
+    return tags

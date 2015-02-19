@@ -27,6 +27,7 @@ mainApp.constant("getBookDetails", function (obj) {
             'isbn_13' : '',
             'description' : '',
             'author' : '',
+            'subject' : '',
         },
         amazon_img = ['LargeImage', 'MediumImage', 'SmallImage'],
         getImageData = function (img_objs, vendor) {
@@ -138,9 +139,10 @@ mainApp.controller('homeController',['$scope','Constants','$timeout','books','gr
                 };
         
             $http(options).success(function(data){
-                $scope.data = getBookDetails(data).data;
-                $scope.images = $scope.data.img_links;
-                books.create($scope.data);
+                // $scope.data = getBookDetails(data).data;
+                // $scope.images = $scope.data.img_links;
+                // books.create($scope.data);
+                console.log(data)
             }).error(function(data){
                 console.log(data)
                 alert()
