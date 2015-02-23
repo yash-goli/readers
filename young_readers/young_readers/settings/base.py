@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'core.services',
     'rest_framework',
     'django_user_agents',
+    'static_precompiler',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.authentication.auth_middleware.LoginRequired',
 )
 
 ROOT_URLCONF = 'young_readers.urls'
@@ -87,7 +89,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
+STATIC_PRECOMPILER_ROOT = PROJECT_ROOT.child('scss')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -108,6 +110,20 @@ TEMPLATE_DIRS = (
 
 AUTH_USER_MODEL = 'authentication.Users'
 
+AUTHENTICATION_BACKENDS = (
+    'core.authentication.backends.EmailAuthBackend',
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
+
+STATIC_PRECOMPILER_COMPILERS = (
+    'static_precompiler.compilers.SCSS',
+)
 
 # import dj_database_url
 # DATABASES = {}

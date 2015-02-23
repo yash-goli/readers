@@ -1,0 +1,152 @@
+@mixin grid($size : 12) {
+    .container,.container-f {
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .row {padding: 10px 0px;}
+
+    [class*='col-']{
+        float: left;
+        position: relative;
+        min-height: 1px;
+        padding-right: 10px;
+        padding-left: 10px;}
+
+    @media (min-width: 768px) {
+        .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+        .container {width: 970px;}
+    }
+    @media (min-width: 1200px) {
+        .container {width: 1170px;}
+    }
+
+    $list : 12 11 10 9 8 7 6 5 4 3 2 1;
+    @if $size == 16 {
+        $list : 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1;
+    }
+    $width : 100/$size;
+    @each $i in $list {
+        .col-xs-#{$i} {
+            width: $width*$i*1%;
+        }
+        .col-xs-pull-#{$i} {
+            right: $width*$i*1%;
+        }
+        .col-xs-push-#{$i} {
+            left: $width*$i*1%;
+        }
+        .col-xs-offset-#{$i} {
+            margin-left: $width*$i*1%;
+        }
+    }
+    .col-xs-pull-0 {
+        right: auto;
+    }
+    .col-xs-push-0 {
+        left: auto;
+    }
+    .col-xs-offset-0 {
+        margin-left: 0;
+    }
+    @media (min-width: 768px) {
+        @each $i in $list {
+            .col-sm-#{$i} {
+                width: $width*$i*1%;
+            }
+            .col-sm-pull-#{$i} {
+                right: $width*$i*1%;
+            }
+            .col-sm-push-#{$i} {
+                left: $width*$i*1%;
+            }
+            .col-sm-offset-#{$i} {
+                margin-left: $width*$i*1%;
+            }
+        }
+        .col-sm-pull-0 {
+            right: auto;
+        }
+        .col-sm-push-0 {
+            left: auto;
+        }
+        .col-sm-offset-0 {
+            margin-left: 0;
+        }
+    }
+    @media (min-width: 992px) {
+        @each $i in $list {
+            .col-md-#{$i} {
+                width: $width*$i*1%;
+            }
+            .col-md-pull-#{$i} {
+                right: $width*$i*1%;
+            }
+            .col-md-push-#{$i} {
+                left: $width*$i*1%;
+            }
+            .col-md-offset-#{$i} {
+                margin-left: $width*$i*1%;
+            }
+        }
+        .col-md-pull-0 {
+            right: auto;
+        }
+        .col-md-push-0 {
+            left: auto;
+        }
+        .col-md-offset-0 {
+            margin-left: 0;
+        }
+    }
+    @media (min-width: 1200px) {
+        @each $i in $list {
+            .col-lg-#{$i} {
+                width: $width*$i*1%;
+            }
+            .col-lg-pull-#{$i} {
+                right: $width*$i*1%;
+            }
+            .col-lg-push-#{$i} {
+                left: $width*$i*1%;
+            }
+            .col-lg-offset-#{$i} {
+                margin-left: $width*$i*1%;
+            }
+        }
+        .col-lg-pull-0 {
+            right: auto;
+        }
+        .col-lg-push-0 {
+            left: auto;
+        }
+        .col-lg-offset-0 {
+            margin-left: 0;
+        }
+    }
+
+    /* Clearfix
+    ================================ */
+    .clearfix:after,.row:after,.container:after{
+        content:' ';
+        display: table;
+        height:0;
+        overflow:hidden;
+        visibility:hidden;
+        width:0;
+    }
+    /* http://sonspring.com/journal/clearing-floats */
+    .clear {
+        clear:both;
+        display:block;
+        height:0;
+        overflow:hidden;
+        visibility:hidden;
+        width:0;
+    }
+    .row:after, .clearfix:after, .container:after{clear:both;}
+} 

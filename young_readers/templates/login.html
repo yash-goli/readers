@@ -1,49 +1,68 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Login | Sunrise SupportHub</title>
-	<link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
-</head>
-<body>
-	<header>
-		<div class="row">
-			<div class="col-4">
-				<h2 class="f-20">
-					<span class="f-orange">Young</span> Readers
-				</h2>
-			</div>
-		</div>
-	</header>
-	<section class="login-wrap">
-		<div class="container full-h">
-			<div class="col-4 p-0 xy-center b-white bs">
-				<div class="col-12 b-orange f-white p-5 txt-c">
-					<h1 class="f-20">Login</h1>
+{% extends "base.html" %}
+{% block mainContent %}
+<div class="container" ng-controller="accountController">
+	<div class="row mt-35">
+		<div class="col-lg-4 col-lg-push-4 login-wrap p-0" ng-init="login_tab='login'">
+			<div class="row txt-c f-20 b-lite-grey1 p-0 login-header">
+				<div class="col-sm-6 pt-20 pb-20" ng-click="login_tab='login'" ng-class="{'b-white':login_tab=='login' }">
+					Sign In
 				</div>
-				<div class="col-12">
-					<form action="/login/" method="POST" class="clearfix">
-						{% csrf_token %}
-						<div class="col-12 pt-10 mt-10 pb-10 b-trans">
-							<input type="text" id="username" name="username" class="field-light p-5 full-w" />
-							<label>Username</label>
-						</div>
-						<div class="col-12 pt-10 pb-10 b-trans">
-							<input type="password" id="password" name="password" class="field-light p-5 full-w"/>
-							<label>Password</label>
-						</div>
-						<div class="col-12 txt-c pb-10">
-							<input type="submit" id="login_btn" value="Sign In" class="btn b-orange f-white" />
-						</div>
-					</form>
+				<div class="col-sm-6 pt-20 pb-20" ng-click="login_tab='register'"  ng-class="{'b-white':login_tab=='register' }">
+					Sign Up
 				</div>
 			</div>
+			<div class="row login-body p-10" ng-show="login_tab=='login'">
+				<div class="row">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-user"></i>
+						</span> 
+						<input type="text" class="full-w brtbr-0" placeholder="Email" ng-model="lemail">
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-key"></i>
+						</span> 
+						<input type="password" class="full-w brtbr-0" placeholder="Password" ng-model="lpwd">
+					</div>
+				</div>
+				<div class="row">
+					<a href="#" class="under sub">Forgot Password?</a>
+					<button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="login($event)">login</button>
+				</div>
+			</div>
+			<div class="row login-body p-10 ng-hide" ng-show="login_tab=='register'" ng-class="{block:login_tab=='register'}">
+				<div class="row">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-user"></i>
+						</span> 
+						<input type="text" class="full-w brtbr-0" placeholder="Name">
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-envelope"></i>
+						</span> 
+						<input type="text" class="full-w brtbr-0" placeholder="Email">
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-key"></i>
+						</span> 
+						<input type="password" class="full-w brtbr-0" placeholder="Password">
+					</div>
+				</div>
+				<div class="row">
+					<button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="register($event)">Register</button>
+				</div>
+			</div>
 		</div>
-	</section>
-	
-	<script type="text/javascript" src="{% static "js/external.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/internal.js" %}"></script>
-</body>
-</html>
+	</div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.views.generic import View
 from django.contrib.auth import authenticate,login,logout
 import json
@@ -18,14 +18,15 @@ def userLogin(request):
     if request.method == "POST":
         uname = request.POST.get('username')
         pwd = request.POST.get('password')
-        user = authenticate(username = uname, password = pwd)
+        user = authenticate(email = uname, password = pwd)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect("/home/")
+            return HttpResponseRedirect("/books/")
         else:
             data = {
                 'message':'Invalid User Credentials'
             }
+            return HttpResponseServerError('Not Authenticated')
     return render_to_response('login.html', data, context_instance=RequestContext(request))
 
 """ For user logout """

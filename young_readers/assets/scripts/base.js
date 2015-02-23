@@ -16,100 +16,11 @@ mainApp.constant("urlRoutes", [
     {'path':'/books/collect/','templatePath':'books_collect.html','controller':'booksCollectController'},
 ]);
 
-mainApp.constant("getBookDetails", function (obj) {
-    console.log(obj)
-    var vendor, item, book_details, description = '',
-        data = {
-            'img_links' : [],
-            'title' : '',
-            'publisher' : '',
-            'isbn_10' : '',
-            'isbn_13' : '',
-            'description' : '',
-            'author' : '',
-            'subject' : '',
-        },
-        amazon_img = ['LargeImage', 'MediumImage', 'SmallImage'],
-        getImageData = function (img_objs, vendor) {
-            var img_obj;
-            if (vendor === "amazon") {
-                if (img_objs.hasOwnProperty("URL")) {
-                    data.img_links.push(img_objs.URL);
-                }
-            }
-            if (vendor === "google") {
-                for (img_obj in img_objs) {
-                    data.img_links.push(img_objs[img_obj]);
-                }
-            }
-        },
-        getBookData = function (book_data, vendor) {
-            var img_obj, content;
-            if (vendor === "amazon") {
-                for (img_obj in amazon_img) {
-                    if (book_data.hasOwnProperty(amazon_img[img_obj])) {
-                        getImageData(book_data[amazon_img[img_obj]], vendor);
-                    }
-                }
-
-                if (book_data.hasOwnProperty("ItemAttributes")) {
-                    data.title = book_data.ItemAttributes.Title;
-                    data.publisher = book_data.ItemAttributes.Publisher;
-                    data.isbn_10 = book_data.ItemAttributes.EAN;
-                    data.isbn_13 = book_data.ItemAttributes.ISBN;
-                    data.author = book_data.ItemAttributes.Author;
-                }
-
-                if (book_data.hasOwnProperty("EditorialReviews")) {
-                    if (book_data.EditorialReviews.EditorialReview instanceof Array) {
-                        for (content in book_data.EditorialReviews.EditorialReview) {
-                            description = description + book_data.EditorialReviews.EditorialReview[content].Content + "<br>";
-                        }
-                    }
-                    console.log(data.description)
-                    if (typeof(book_data.EditorialReviews.EditorialReview) === "object") {
-                        data.description = book_data.EditorialReviews.EditorialReview.Content;
-                    }
-                }
-            }
-            data.description = description;
-        };
-
-    for (vendor in obj) {
-        if (vendor === "isbndb") {
-            if (!obj[vendor].hasOwnProperty("error")) {
-
-            }
-        }
-
-        if (vendor === "google") {
-            if (obj[vendor].totalItems !== 0) {
-                book_details = obj[vendor].items[0].volumeInfo;
-                if (book_details.hasOwnProperty("imageLinks")) {
-                    getImageData(book_details.imageLinks, vendor);
-                }
-            }
-        }
-
-        if (vendor === "amazon") {
-            if (!obj[vendor].ItemLookupResponse.Items.hasOwnProperty("Errors")) {
-                book_details = obj[vendor].ItemLookupResponse.Items.Item;
-                if (book_details instanceof Array) {
-                    for (item in book_details) {
-                        getBookData(book_details[item], vendor);
-                    }
-                }
-                if (typeof(book_details) === "object") {
-                    getBookData(book_details, vendor);
-                }
-            }
-        }
-    }
-
-    return {
-        'data' : data
-    }
-});
+/** External plugins configuration **/
+mainApp.config(['growlProvider', function (growlProvider) {
+    growlProvider.globalTimeToLive(10000);
+    growlProvider.globalPosition('top-center');
+}]);
 
 // Base Controller
 mainApp.controller('baseController',['$scope','Constants','$location','growl','$http','$timeout',
@@ -117,37 +28,43 @@ mainApp.controller('baseController',['$scope','Constants','$location','growl','$
 }]);
 
 // Home Controller
-mainApp.controller('homeController',['$scope','Constants','$timeout','books','growl','getBookDetails','$http',
-    function($scope,Constants,$timeout,books,growl,getBookDetails,$http){
+mainApp.controller('homeController',['$scope','Constants','$timeout','books','growl','$http',
+    function($scope,Constants,$timeout,books,growl,$http){
 
-        // books.read(1).then(function(data){
-        //     if(data.status == 'success'){
-        //         $scope.books = data.result;
-        //     }
-        // }); 
+}]);
 
-        $scope.book_meta = ['ISBN','title','author','subject','publisher','item_type','cover_type','image'];
-        $scope.images = {}
-        $scope.getBookData = function () {
-            var url,
-                options = {
-                    'method': 'GET',
-                    'url': '/get_book_data/',
-                    'params': {
-                        'isbn':$scope.isbn
+// Books Controller
+mainApp.controller('accountController',['$scope','Constants','$timeout','$http','growl','djangoConstants','transformRequestAsFormPost',
+    function($scope,Constants,$timeout,$http,growl,djangoConstants,transformRequestAsFormPost){  
+        $scope.login = function ($event){
+            var el = $event.target;
+            el.setAttribute('disabled','disabled');
+            el.innerText = "";
+            el.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (re.test($scope.lemail)) {
+                var options = {
+                    'transformRequest': transformRequestAsFormPost,
+                    'method': 'POST',
+                    'url': '/login/',
+                    'data' : {
+                        'csrfmiddlewaretoken' : djangoConstants.csrfToken,
+                        'username' : $scope.lemail,
+                        'password' : $scope.lpwd
                     },
                 };
-        
-            $http(options).success(function(data){
-                // $scope.data = getBookDetails(data).data;
-                // $scope.images = $scope.data.img_links;
-                // books.create($scope.data);
-                console.log(data)
-            }).error(function(data){
-                console.log(data)
-                alert()
-            });
-        };   
+                $http(options).success(function (data) {
+                    console.log(data)
+                }).error(function (data) {
+                    el.removeAttribute("disabled");
+                    el.innerHTML = '';
+                    el.innerText = "Login";
+                });
+            }
+            else {
+                growl.error("Invaild Email")
+            }    
+        };  
 }]);
 
 // Books Controller
@@ -161,11 +78,69 @@ mainApp.controller('booksListController',['$scope','Constants','$timeout','$http
 }]);
 
 // Books Controller
-mainApp.controller('booksAddController',['$scope','Constants','$timeout','$http','growl',
-    function($scope,Constants,$timeout,$http,growl){
+mainApp.controller('booksAddController',['$scope','Constants','$timeout','$http','growl','books',
+    function($scope,Constants,$timeout,$http,growl,books){
+        $scope.redirect = function (path) {
+            window.location.href = path;
+        };
+        $scope.is_book = false;
+        $scope.book_data = {
+                'ISBN_10' : '',
+                'ISBN_13' : '',
+                'title' : '',
+                'author' : '',
+                'cover_type' : '',
+                'image' : '',
+                'publisher' : '',
+                'description' : '',
+                'subject' : '',
+                'book_penalty' : '',
+                'total_count' : '',
+            };
+        $scope.tags = [];
+        $scope.getBookData = function () {
+            var url,
+                options = {
+                    'method': 'GET',
+                    'url': '/get_book_data/',
+                    'params': {
+                        'isbn':$scope.isbn
+                    },
+                };
+        
+            $http(options).success(function(data){
+                $scope.is_book = true;
+                $scope.book_data.ISBN_10 = data.isbn_10;
+                $scope.book_data.ISBN_13 = data.isbn_13;
+                $scope.book_data.title = data.title;
+                $scope.book_data.author = data.author;
+                $scope.book_data.image = data.image;
+                $scope.book_data.publisher = data.publisher;
+                $scope.book_data.description = data.description;
+                $scope.more = data.more;
+                data.subject.forEach(function (val) {
+                    val.split("-").forEach(function (tag) {
+                        if ($scope.tags.indexOf(tag) === -1) {
+                            $scope.tags.push(tag);
+                        }
+                    });
+                });
+            }).error(function(data){
+                $scope.is_book = false;
+                console.log(data);
+            });
+        };   
 
-        $scope.addBook = function(){
-
+        $scope.save_book = function () {
+            $scope.book_data.subject = "";
+            $scope.tags.forEach(function (val) {
+                $scope.book_data.subject = $scope.book_data.subject + "-" +val;
+            });
+            books.create($scope.book_data).then(function (data) {
+                console.log(data);
+            }, function (data) {
+                console.log(data);
+            });
         };
      
 }]);

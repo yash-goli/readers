@@ -1,0 +1,210 @@
+// reset
+@mixin reset {
+	/* http://meyerweb.com/eric/tools/css/reset/ - v2.0 | 20110126 - License: none (public domain) */
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code,
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed, 
+	figure, figcaption, footer, header, hgroup, 
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+	/* HTML5 display-role reset for older browsers */
+	article, aside, details, figcaption, figure, 
+	footer, header, hgroup, menu, nav, section { display: block; }
+	body { line-height: 1; }
+	ol, ul { list-style: none; }
+	blockquote, q { quotes: none; }
+	blockquote:before, blockquote:after,
+	q:before, q:after { content: ''; content: none; }
+	table { border-collapse: collapse; border-spacing: 0; }
+	*{
+		-webkit-box-sizing:border-box;
+		   -moz-box-sizing:border-box;
+				box-sizing:border-box;
+	}
+}
+
+// font families
+$georgia: Georgia, Cambria, "Times New Roman", Times, serif;
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$lucida-grande: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+$monospace: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+$verdana: Verdana, Geneva, sans-serif;
+
+// headings
+$headings: 'h1, h2, h3, h4, h5, h6';
+
+// html font size
+$base-font : 16;
+
+// form fields
+$form-buttons: "button, .button, .btn, input[type=submit], input[type=reset]";
+$form-inputs: 'input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"],  input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"], textarea, select';
+
+// custom font face
+@mixin font($font-family, $file-path: "", $is_path: false, $weight: normal, $style: normal) {
+	@font-face {
+		font-family: $font-family;
+		@if $is_path{
+			src: url('#{$file-path}.eot');
+			src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+			     url('#{$file-path}.woff') format('woff'),
+			     url('#{$file-path}.ttf') format('truetype'),
+			     url('#{$file-path}.svg##{$font-family}') format('svg');
+		}
+		font-weight: $weight;
+		font-style: $style;
+	}
+}
+
+// clearfix - call to with @include
+// No longer auto-dumps it to your compiled CSS
+// Example: .clear, .clearfix { @include clearfix; }
+@mixin clearfix {
+	&:after {
+		content: " ";
+		display: table;
+		clear: both;
+	}
+}
+
+// legibility
+@mixin legibility {
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+// rotate -- add more prefixes if you want them
+// note: does not work in IE8 or lower
+@mixin rotate($deg: '', $prefixes: "-moz-" "-webkit-" "-ms-" "-o-" "") {
+	@each $prefix in $prefixes {
+		#{$prefix}transform: rotate(#{$deg}deg);
+	}
+}
+
+// border radius -- add more prefixes if you want them
+@mixin radius($radius: 10,$units: 'px',$prefixes: "-moz-" "-webkit-" "") {
+	@each $prefix in $prefixes {
+		#{$prefix}border-radius: $radius#{$units};
+	}
+}
+
+// transition
+@mixin transition($values : all, $speed : 0.5s, $timing:linear , $delay : "", $prefixes: "-moz-" "-webkit-" "-ms-" "-o-" ""){
+	@each $prefix in $prefixes { 
+		#{$prefix}transition: $values $speed #{$timing} #{$delay};
+	}
+}
+
+// gradient -- call to pie if you want CSS3PIE support - http://css3pie.com
+@mixin gradient($top, $bottom, $color-stop1: 0%, $color-stop2: 100%) {
+	background: lighten($bottom, 20%);
+	background: -moz-linear-gradient(top, $top #{$color-stop1}, $bottom #{$color-stop2});
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(#{$color-stop1}, $top), color-stop(#{$color-stop2}, $bottom));
+	background: -webkit-linear-gradient(top, $top #{$color-stop1}, $bottom #{$color-stop2});
+	background: -o-linear-gradient(top, $top #{$color-stop1}, $bottom #{$color-stop2});
+	background: -ms-linear-gradient(top, $top #{$color-stop1}, $bottom #{$color-stop2});
+	background: linear-gradient(top, $top #{$color-stop1}, $bottom #{$color-stop2});
+}
+
+// box shadow - supports up to 9 shadows
+@mixin box-shadow($shadow-1, $shadow-2: false, $shadow-3: false, $shadow-4: false, $shadow-5: false, $shadow-6: false, $shadow-7: false, $shadow-8: false, $shadow-9: false) {
+	$full: $shadow-1;
+	@if $shadow-2 { $full: $full, $shadow-2 }
+	@if $shadow-3 { $full: $full, $shadow-3 }
+	@if $shadow-4 { $full: $full, $shadow-4 }
+	@if $shadow-5 { $full: $full, $shadow-5 }
+	@if $shadow-6 { $full: $full, $shadow-6 }
+	@if $shadow-7 { $full: $full, $shadow-7 }
+	@if $shadow-8 { $full: $full, $shadow-8 }
+	@if $shadow-9 { $full: $full, $shadow-9 }
+	-moz-box-shadow: $full;
+	-webkit-box-shadow: $full;
+	box-shadow: $full;
+}
+
+// text shadow -- falls back to "1px 1px 0 #000"
+@mixin text-shadow($x: 1px, $y: 1px, $blur: 0, $color: #000) {
+	text-shadow: $x $y $blur $color;
+}
+
+// opacity -- $opacity should be passed in 0.0 format
+@mixin opacity($opacity) {
+	filter: alpha(opacity= + round($opacity*100));
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity= + round($opacity*100));
+	-moz-opacity: $opacity;
+	opacity: $opacity;
+}
+
+// image replacement
+@mixin imgrep {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+// font-size
+@mixin font-size($size,$unit:em){
+	@if $unit == em or $unit == rem{
+		font-size : $size/$base-font#{$unit};
+	}
+	@else{
+		font-size : $size#{$unit};
+	}
+}
+
+@mixin margin($value,$type : m,$unit : em){
+	@if $unit == em or $unit == rem{
+		$size:$value/$base-font#{$unit};
+	}
+	@else{
+		$size:$value#{$unit};
+	}
+
+	@if $type == m{
+		margin : $size/$base-font#{$unit};
+	}
+	@else if $type == mt{
+		margin : $size/$base-font#{$unit};
+	}
+	@else if $type == mr{
+		margin : $size/$base-font#{$unit};
+	}
+	@else if $type == mb{
+		margin : $size/$base-font#{$unit};
+	}
+	@else if $type == ml{
+		margin : $size/$base-font#{$unit};
+	}
+}
+
+@mixin padding($value,$type : p,$unit:em){
+	@if $unit == em or $unit == rem{
+		$size:$value/$base-font#{$unit};
+	}
+	@else{
+		$size:$value#{$unit};
+	}
+	
+	@if $type == p{
+		padding : $size/$base-font#{$unit};
+	}
+	@else if $type == pt{
+		padding : $size/$base-font#{$unit};
+	}
+	@else if $type == pr{
+		padding : $size/$base-font#{$unit};
+	}
+	@else if $type == pb{
+		padding : $size/$base-font#{$unit};
+	}
+	@else if $type == pl{
+		padding : $size/$base-font#{$unit};
+	}
+}

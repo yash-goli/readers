@@ -170,7 +170,22 @@ mainApp.factory('transformRequestAsFormPost',[
 mainApp.factory('books', ['$http', '$q', 'Constants', function($http, $q, Constants){
     var books = {};
     books.create = function (data) {
-        console.log(data);
+        var deferer = $q.defer();
+        var promise = deferer.promise;
+        var options = {
+            'method': 'POST',
+            'url': '/api/books/',
+            'data' : data,
+        };
+        $http(options).success(function(data){
+            deferer.resolve(data);
+        }).error(function(data){
+            var out = {};
+            out.status = 'error';
+            out.result = data;
+            deferer.reject(data);
+        });
+        return promise;
     };
     books.read = function(ID){
         var deferer = $q.defer();
@@ -196,7 +211,7 @@ mainApp.factory('books', ['$http', '$q', 'Constants', function($http, $q, Consta
             var out = {};
             out.status = 'error';
             out.result = data;
-            deferer.resolve(data);
+            deferer.reject(data);
         });
         return promise;
     };

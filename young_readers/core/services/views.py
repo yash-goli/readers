@@ -29,9 +29,10 @@ def get_book_data(request):
         'google' : False,
         'isbndb' : False, 
     }
-    
+    import pdb;pdb.set_trace()
     def from_amazon(book):
         desc = ""
+
         data['image'] = book['LargeImage']['URL']
         data["title"] = book["ItemAttributes"]["Title"]
         data["publisher"] = book["ItemAttributes"]["Publisher"]
@@ -49,7 +50,7 @@ def get_book_data(request):
 
         if 'BrowseNodes' in book:
             if type(book["BrowseNodes"]["BrowseNode"]) == collections.OrderedDict:
-                data['subject'].append(get_tags(nodes)[1:])
+                data['subject'].append(get_tags(book["BrowseNodes"]["BrowseNode"])[1:])
             else:
                 for nodes in book["BrowseNodes"]["BrowseNode"]:
                     data['subject'].append(get_tags(nodes)[1:])
@@ -62,8 +63,15 @@ def get_book_data(request):
         else:
             data["title"] = book["title"]
 
-        data["publisher"] = book["publisher"]
-        data["description"] = book["description"]
+        if 'categories' in book:
+            data["publisher"] = book["publisher"]
+        else:
+            data["publisher"] = ""
+
+        if 'description' in book:
+            data["description"] = book["description"]
+        else:
+            data["description"] = ""
 
         for identifier in book["industryIdentifiers"]:
             if identifier['type'] == "ISBN_10":
@@ -120,6 +128,9 @@ def get_book_data(request):
     if type(items) == collections.OrderedDict:
         from_amazon(items)
         domain_status['amazon'] = True
+    if type(items) == list:
+        from_amazon(items[0])
+        domain_status['amazon'] = True
 
     if domain_status['amazon'] == False:
         toJSON = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+request.GET['isbn'])
@@ -142,7 +153,7 @@ def get_book_data(request):
     return HttpResponse(json.dumps(data))
 
 def get_tags(nodes):
-    non_tags = ["Books","Subjects"]
+    non_tags = ["Books","Subjects","Categories"]
     if 'Ancestors' in nodes:
         if not nodes['Name'] in non_tags:
             tags = nodes['Name']
