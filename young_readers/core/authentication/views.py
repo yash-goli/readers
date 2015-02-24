@@ -21,7 +21,7 @@ def userLogin(request):
         user = authenticate(email = uname, password = pwd)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect("/books/")
+            return HttpResponseRedirect("/")
         else:
             data = {
                 'message':'Invalid User Credentials'

@@ -1,9 +1,25 @@
-<header class="b-dark_blue">
+<header class="b-blue">
 	<div class="row">
-		<div class="col-4">
-			<h2 class="f-20 f-white">
+		<div class="col-sm-4 col-sm-push-1">
+			<h2 class="f-20 f-white pt-5">
 				Young Readers
 			</h2>
+		</div>
+		<div class="col-lg-4 pull-r col-sm-pull-1 txt-r">
+			{% if user.is_authenticated %}
+				<span class="acc-lo">
+					<a href="#" class="f-white">{{user}}&nbsp;<i class="fa fa-chevron-down f-12"></i></a>
+					<ul class="txt-l">
+						<li><i class="fa fa-shopping-cart"></i>&nbsp;My Orders</li>
+						<li><i class="fa fa-map-marker"></i>&nbsp;Address Book</li>
+						<li><i class="fa fa-user"></i>&nbsp;My Profile</li>
+						<li><i class="fa fa-key"></i>&nbsp;Change Password</li>
+						<li ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</li>
+					</ul>
+				</span>
+			{% else %}
+				<button class="btn f-white b-blue bd" ng-click="redirect('/login/')">Sign In/Sign Up</button>
+			{% endif %}
 		</div>
 	</div>
 </header>

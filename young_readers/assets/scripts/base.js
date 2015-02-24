@@ -24,7 +24,20 @@ mainApp.config(['growlProvider', function (growlProvider) {
 
 // Base Controller
 mainApp.controller('baseController',['$scope','Constants','$location','growl','$http','$timeout',
-    function($scope,Constants,$location,growl,$http,$timeout){        
+    function($scope,Constants,$location,growl,$http,$timeout){   
+        $scope.redirect = function (path) {
+            window.location.href = path;
+        };
+        $scope.logout = function () {
+            var options = {
+                'method': 'GET',
+                'url': '/logout/',
+            };
+            $http(options).success(function (data) {
+                console.log(data)
+            }).error(function (data) {
+            });
+        };  
 }]);
 
 // Home Controller
@@ -80,9 +93,7 @@ mainApp.controller('booksListController',['$scope','Constants','$timeout','$http
 // Books Controller
 mainApp.controller('booksAddController',['$scope','Constants','$timeout','$http','growl','books',
     function($scope,Constants,$timeout,$http,growl,books){
-        $scope.redirect = function (path) {
-            window.location.href = path;
-        };
+        
         $scope.is_book = false;
         $scope.book_data = {
                 'ISBN_10' : '',

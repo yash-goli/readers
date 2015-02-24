@@ -180,6 +180,8 @@ label,.sub{
 .h-under:hover{text-decoration: underline;}
 .ng-hide{display: none !important;}
 
+.bd{border: 1px solid map-get($color, white);}
+
 @each $box-size in $box-sizes {
     .m-#{$box-size}{
         margin: $box-size*1px;
@@ -224,5 +226,47 @@ label,.sub{
     }
     .login-header div:nth-of-type(1){
         border-right: 1px solid map-get($color, lite-grey2);
+    }
+}
+
+/*
+========================================================
+                Header Style     
+========================================================*/
+header{
+    height: 50px;
+}
+.acc-lo{
+    width: 180px;
+    display: inline-block;
+    position: relative;
+    padding: 5px 0px 19px;
+    ul{
+        display: none;
+
+        position: absolute;
+        right: 0;
+        top:100%;
+
+        background-color: map-get($color, white);
+        border : 1px solid map-get($color, lite-grey2);
+
+        width: 180px;
+        li {
+            padding: 10px;
+            display: block;
+            text-align: left;
+            cursor: pointer;
+            i{
+                margin-right:10px;
+            }
+            &:hover{
+                background-color: map-get($color, blue);
+                color: map-get($color, white);
+            }
+        }
+    }
+    &:hover ul{
+        display: block;
     }
 }
