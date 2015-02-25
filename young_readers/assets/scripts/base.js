@@ -34,7 +34,9 @@ mainApp.controller('baseController',['$scope','Constants','$location','growl','$
                 'url': '/logout/',
             };
             $http(options).success(function (data) {
-                console.log(data)
+                if (data.message === "success") {
+                    $scope.redirect("/");
+                }
             }).error(function (data) {
             });
         };  
@@ -43,7 +45,11 @@ mainApp.controller('baseController',['$scope','Constants','$location','growl','$
 // Home Controller
 mainApp.controller('homeController',['$scope','Constants','$timeout','books','growl','$http',
     function($scope,Constants,$timeout,books,growl,$http){
+        books.read().then(function (data) {
+            $scope.books = data.result;
+        }, function (data) {
 
+        })
 }]);
 
 // Books Controller
@@ -67,7 +73,9 @@ mainApp.controller('accountController',['$scope','Constants','$timeout','$http',
                     },
                 };
                 $http(options).success(function (data) {
-                    console.log(data)
+                    if (data.message === "success") {
+                        $scope.redirect("/");
+                    }
                 }).error(function (data) {
                     el.removeAttribute("disabled");
                     el.innerHTML = '';

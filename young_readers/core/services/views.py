@@ -29,7 +29,7 @@ def get_book_data(request):
         'google' : False,
         'isbndb' : False, 
     }
-    import pdb;pdb.set_trace()
+    
     def from_amazon(book):
         desc = ""
 

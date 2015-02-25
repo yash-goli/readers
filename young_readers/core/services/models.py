@@ -5,7 +5,7 @@ class BookItems(models.Model):
     book_id = models.AutoField(primary_key = True) 
     ISBN_10 = models.CharField(max_length = 10, blank = True, null = True)
     ISBN_13 = models.CharField(max_length = 13, blank = True, null = True)
-    title = models.CharField(max_length = 30)
+    title = models.CharField(max_length = 60)
     author = models.CharField(max_length = 30)
     item_type = models.CharField(max_length = 30, blank = True, null = True)
     cover_type = models.CharField(max_length = 30)
@@ -15,7 +15,7 @@ class BookItems(models.Model):
     available_count = models.IntegerField(default = 1)
     publisher = models.CharField(max_length = 50)
     description = models.TextField(blank = True, null = True)
-    subject = models.CharField(max_length = 50, default = True, null = True)
+    subject = models.CharField(max_length = 200, default = True, null = True)
     book_penalty = models.CharField(max_length = 30, default = True, null = True)
     total_count = models.IntegerField(default = 1)
 

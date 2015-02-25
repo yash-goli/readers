@@ -31,7 +31,7 @@ class BookItemsListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookItems
-        fields = ('ISBN','title','author','item_type','cover_type','image','available_count','publisher','subject','total_count', 'book_status')
+        fields = ('ISBN_10','ISBN_13','title','author','item_type','cover_type','image','available_count','publisher','subject','total_count', 'book_status')
  
 class BookItemsDtlSerializer(serializers.ModelSerializer):
     book_status = serializers.SerializerMethodField('getBookStatus')

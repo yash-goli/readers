@@ -21,7 +21,10 @@ def userLogin(request):
         user = authenticate(email = uname, password = pwd)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect("/")
+            data = {
+                'message':'success'
+            }
+            return HttpResponse(json.dumps(data))
         else:
             data = {
                 'message':'Invalid User Credentials'
@@ -31,8 +34,12 @@ def userLogin(request):
 
 """ For user logout """
 def userLogout(request):
+    data = {}
     logout(request)
-    return HttpResponseRedirect("/")
+    data = {
+        'message':'success'
+    }
+    return HttpResponse(json.dumps(data))
 
 
 

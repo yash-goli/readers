@@ -1,3 +1,4 @@
+{% load static %}
 <header class="b-blue">
 	<div class="row">
 		<div class="col-sm-4 col-sm-push-1">
@@ -7,8 +8,21 @@
 		</div>
 		<div class="col-lg-4 pull-r col-sm-pull-1 txt-r">
 			{% if user.is_authenticated %}
-				<span class="acc-lo">
-					<a href="#" class="f-white">{{user}}&nbsp;<i class="fa fa-chevron-down f-12"></i></a>
+				<div class="prof-items">
+					<ul>
+						<li>
+							<i class="fa fa-bell"></i>
+						</li>
+						<li>
+							<i class="fa fa-bookmark"></i>
+						</li>
+						<li>
+							<i class="fa fa-shopping-cart"></i>
+						</li>
+					</ul>
+				</div>
+				<div class="acc-lo">
+					<a href="#" class="f-white">{{user}}&nbsp;<i class="fa fa-sort-desc f-14"></i></a>
 					<ul class="txt-l">
 						<li><i class="fa fa-shopping-cart"></i>&nbsp;My Orders</li>
 						<li><i class="fa fa-map-marker"></i>&nbsp;Address Book</li>
@@ -16,7 +30,7 @@
 						<li><i class="fa fa-key"></i>&nbsp;Change Password</li>
 						<li ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</li>
 					</ul>
-				</span>
+				</div>
 			{% else %}
 				<button class="btn f-white b-blue bd" ng-click="redirect('/login/')">Sign In/Sign Up</button>
 			{% endif %}

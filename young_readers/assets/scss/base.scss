@@ -42,30 +42,6 @@ a {
     text-decoration: none;
 }
 @include grid();
-@each $name, $value in $color {
-    .f-#{$name}{
-        color: $value;
-    }
-    .b-#{$name}{
-        background-color: $value;
-    }
-}
-@each $name, $value in $txt {
-    .#{$name}{
-        text-align: $value;
-    }
-}
-@each $name, $value in $float {
-    .#{$name}{
-        float:$value;
-    }
-}
-@each $font-size in $font-sizes {
-    $rem : $font-size/16;
-    .f-#{$font-size}{
-        font-size : $rem * 1rem;
-    }
-}
 #{$form-inputs} {
     display: inline-block;
     height: 34px;
@@ -181,7 +157,30 @@ label,.sub{
 .ng-hide{display: none !important;}
 
 .bd{border: 1px solid map-get($color, white);}
-
+@each $name, $value in $color {
+    .f-#{$name}{
+        color: $value;
+    }
+    .b-#{$name}{
+        background-color: $value;
+    }
+}
+@each $name, $value in $txt {
+    .#{$name}{
+        text-align: $value;
+    }
+}
+@each $name, $value in $float {
+    .#{$name}{
+        float:$value;
+    }
+}
+@each $font-size in $font-sizes {
+    $rem : $font-size/16;
+    .f-#{$font-size}{
+        font-size : $rem * 1rem;
+    }
+}
 @each $box-size in $box-sizes {
     .m-#{$box-size}{
         margin: $box-size*1px;
@@ -236,11 +235,30 @@ label,.sub{
 header{
     height: 50px;
 }
-.acc-lo{
-    width: 180px;
+.prof-items{
     display: inline-block;
     position: relative;
-    padding: 5px 0px 19px;
+    padding: 5px;
+    ul li{
+        display: inline-block;
+        margin: 0px 10px;
+        i{
+            color: map-get($color, white);
+            font-size: 1.25em;
+        }
+    }
+}
+.acc-lo{
+    display: inline-block;
+    position: relative;
+    padding: 5px 0px 15px;
+    &>a{
+        font-size: 1.25em;
+    }
+    &>a i {
+        display: inline-block;
+        vertical-align: top;
+    }
     ul{
         display: none;
 
@@ -252,6 +270,7 @@ header{
         border : 1px solid map-get($color, lite-grey2);
 
         width: 180px;
+        z-index: 1;
         li {
             padding: 10px;
             display: block;
@@ -268,5 +287,76 @@ header{
     }
     &:hover ul{
         display: block;
+    }
+}
+.branner-wrap{
+    width: 100%;
+    height: 350px;
+    position: relative;
+    background-image: url("../images/book.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    .wrapper{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+        h1{
+            text-shadow: 0px 0px 2px rgba(0,0,0,0.3);
+        }
+        .search-wrap{
+            padding:10px;
+            background-color: rgba(255,255,255,.3);
+            border-radius: 2px;
+            input{
+                font-size: 1.25em;
+                height: 50px;
+            }
+            .input-group-addon{
+                border:0;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+            }
+        }
+    }
+}
+
+.books-wrapper{
+    h2{
+        border-top:2px solid map-get($color, dark-grey2);
+        border-bottom:2px solid map-get($color, dark-grey2);
+    }
+    .book-wrap{
+        width: 100%;
+        height: 320px;
+        border:1px solid map-get($color, lite-grey2);
+        border-radius: 2px;
+        padding: 0px;
+        .book-img{
+            width: 100%;
+            height: 200px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+        .book-detail{
+            position: relative;
+            height: 120px;
+            a{
+                display: inline-block;
+            }
+            .add-cart{
+                border-top:1px solid map-get($color, lite-grey2);
+                padding: 5px;
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                text-align: center;
+                width: 100%;
+            }
+        } 
     }
 }
