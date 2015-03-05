@@ -52,7 +52,7 @@ a {
     background-color: #fff;
     background-image: none;
     border: 1px solid #aab2bd;
-    border-radius: 2px;
+    vertical-align: middle;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
@@ -61,7 +61,7 @@ a {
 textarea{height: auto;}
 .btn {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 6px 16px;
     margin-bottom: 0;
     font-size: 0.875em;
     font-weight: 400;
@@ -75,8 +75,7 @@ textarea{height: auto;}
     -ms-user-select: none;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
-    border-radius: 17px;}
+    border: 1px solid transparent;}
 button[disabled]{
     color: #fff;
     background-color: #ccd1d9;
@@ -101,7 +100,6 @@ label,.sub{
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: .25em;
 }
 .label-info{
   background-color: #37bc9b;
@@ -133,7 +131,6 @@ label,.sub{
     text-align: center;
     background-color: #eee;
     border: 1px solid #ccc;
-    border-radius: 4px;
 }
 .input-group-addon, .input-group-btn {
     width: 1%;
@@ -143,15 +140,6 @@ label,.sub{
 .input-group input, .input-group-addon, .input-group-btn {
     display: table-cell;
 }
-.br-0{border-radius: 0;}
-.brtr-0{border-top-right-radius: 0;}
-.brtl-0{border-top-left-radius: 0;}
-.brbr-0{border-bottom-right-radius: 0;}
-.brbl-0{border-bottom-left-radius: 0;}
-.brtrl-0{border-top-right-radius: 0;border-top-left-radius: 0;}
-.brbrl-0{border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
-.brtbr-0{border-top-right-radius: 0;border-bottom-right-radius: 0;}
-.brtbl-0{border-top-left-radius: 0;border-bottom-left-radius: 0;}
 .under{text-decoration: underline;}
 .h-under:hover{text-decoration: underline;}
 .ng-hide{display: none !important;}
@@ -310,7 +298,6 @@ header{
         .search-wrap{
             padding:10px;
             background-color: rgba(255,255,255,.3);
-            border-radius: 2px;
             input{
                 font-size: 1.25em;
                 height: 50px;
@@ -333,7 +320,6 @@ header{
         width: 100%;
         height: 320px;
         border:1px solid map-get($color, lite-grey2);
-        border-radius: 2px;
         padding: 0px;
         .book-img{
             width: 100%;

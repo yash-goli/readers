@@ -11,6 +11,7 @@ mainApp.constant("urlRoutes", [
     {'path':'/','templatePath':'home.html','controller':'homeController'},
     {'path':'/books/','templatePath':'books_list.html','controller':'booksListController'},
     {'path':'/books/add/','templatePath':'books_add.html','controller':'booksAddController'},
+    {'path':'/books/barcodes/','templatePath':'barcode_add.html','controller':'barcodesAddController'},
     {'path':'/books/delete/','templatePath':'books_delete.html','controller':'booksDeleteController'},
     {'path':'/books/dispatch/','templatePath':'books_dispatch.html','controller':'booksDispatchController'},
     {'path':'/books/collect/','templatePath':'books_collect.html','controller':'booksCollectController'},
@@ -38,7 +39,7 @@ mainApp.controller('baseController',['$scope','Constants','$location','growl','$
                     $scope.redirect("/");
                 }
             }).error(function (data) {
-            });
+            }); 
         };  
 }]);
 
@@ -89,11 +90,28 @@ mainApp.controller('accountController',['$scope','Constants','$timeout','$http',
 }]);
 
 // Books Controller
-mainApp.controller('booksListController',['$scope','Constants','$timeout','$http','growl',
+mainApp.controller('barcodesAddController',['$scope','Constants','$timeout','$http','growl',
     function($scope,Constants,$timeout,$http,growl){
+        $scope.barcodes = [];
+        $scope.generateCodes = function(){
+            var options = {
+                'method': 'GET',
+                'url': '/generate_codes/',
+                'params': {
+                    'codes':$scope.codes
+                },
+            };
+            $http(options).success(function (data) {
+                console.log(data)
+                data.forEach(function(val) { 
+                    $scope.barcodes.push($scope.loadImage("barcode/"+val+".png"));
+                });
+            }).error(function (data) {
+            });
+        };
 
-        $scope.getBookDetails = function(){
-
+        $scope.loadImage = function(assetPath){
+            return Constants.get('staticLink')+Constants.get('imageDir')+assetPath;
         };
      
 }]);
@@ -128,6 +146,7 @@ mainApp.controller('booksAddController',['$scope','Constants','$timeout','$http'
                 };
         
             $http(options).success(function(data){
+                console.log(data);
                 $scope.is_book = true;
                 $scope.book_data.ISBN_10 = data.isbn_10;
                 $scope.book_data.ISBN_13 = data.isbn_13;
@@ -163,6 +182,17 @@ mainApp.controller('booksAddController',['$scope','Constants','$timeout','$http'
         };
      
 }]);
+
+// Books Controller
+mainApp.controller('booksListController',['$scope','Constants','$timeout','$http','growl',
+    function($scope,Constants,$timeout,$http,growl){
+
+        $scope.getBookDetails = function(){
+
+        };
+     
+}]);
+
 
 // Books Controller
 mainApp.controller('booksDeleteController',['$scope','Constants','$timeout','$http','growl',

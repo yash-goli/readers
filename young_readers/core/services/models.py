@@ -31,9 +31,14 @@ class BookItemsDtl(models.Model):
     cover_type = models.CharField(max_length = 30)
     item_type = models.CharField(max_length = 30)
 
-
     class Meta:
         db_table = "book_items_dtl"
+
+class Barcodes(models.Model):
+    barcode_id = models.AutoField(primary_key = True)
+    barcode = models.CharField(max_length = 15)
+    class Meta:
+        db_table = "barcodes"
 
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(Users)

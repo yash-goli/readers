@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^', include('core.authentication.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^get_book_data/', 'core.services.views.get_book_data'),
+    url(r'^generate_codes/', 'core.services.views.generate_codes'),
     #catch all
     url(r'^.*/$', 'core.authentication.views.CatchAllUrl'),
 )

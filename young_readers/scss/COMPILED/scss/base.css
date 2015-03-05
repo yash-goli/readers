@@ -731,7 +731,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
   background-color: #fff;
   background-image: none;
   border: 1px solid #aab2bd;
-  border-radius: 2px;
+  vertical-align: middle;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
@@ -743,7 +743,7 @@ textarea {
 
 .btn {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 6px 16px;
   margin-bottom: 0;
   font-size: 0.875em;
   font-weight: 400;
@@ -757,8 +757,7 @@ textarea {
   -ms-user-select: none;
   user-select: none;
   background-image: none;
-  border: 1px solid transparent;
-  border-radius: 17px; }
+  border: 1px solid transparent; }
 
 button[disabled] {
   color: #fff;
@@ -786,8 +785,7 @@ label, .sub {
   color: #fff;
   text-align: center;
   white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em; }
+  vertical-align: baseline; }
 
 .label-info {
   background-color: #37bc9b;
@@ -818,8 +816,7 @@ label, .sub {
   color: #555;
   text-align: center;
   background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 4px; }
+  border: 1px solid #ccc; }
 
 .input-group-addon, .input-group-btn {
   width: 1%;
@@ -828,37 +825,6 @@ label, .sub {
 
 .input-group input, .input-group-addon, .input-group-btn {
   display: table-cell; }
-
-.br-0 {
-  border-radius: 0; }
-
-.brtr-0 {
-  border-top-right-radius: 0; }
-
-.brtl-0 {
-  border-top-left-radius: 0; }
-
-.brbr-0 {
-  border-bottom-right-radius: 0; }
-
-.brbl-0 {
-  border-bottom-left-radius: 0; }
-
-.brtrl-0 {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0; }
-
-.brbrl-0 {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0; }
-
-.brtbr-0 {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0; }
-
-.brtbl-0 {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
 
 .under {
   text-decoration: underline; }
@@ -1432,8 +1398,7 @@ header {
       text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); }
     .branner-wrap .wrapper .search-wrap {
       padding: 10px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 2px; }
+      background-color: rgba(255, 255, 255, 0.3); }
       .branner-wrap .wrapper .search-wrap input {
         font-size: 1.25em;
         height: 50px; }
@@ -1449,7 +1414,6 @@ header {
   width: 100%;
   height: 320px;
   border: 1px solid #e6e9ed;
-  border-radius: 2px;
   padding: 0px; }
   .books-wrapper .book-wrap .book-img {
     width: 100%;

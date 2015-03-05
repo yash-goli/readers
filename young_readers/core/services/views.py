@@ -35,10 +35,28 @@ def get_book_data(request):
 
         data['image'] = book['LargeImage']['URL']
         data["title"] = book["ItemAttributes"]["Title"]
-        data["publisher"] = book["ItemAttributes"]["Publisher"]
-        data["isbn_13"] = book["ItemAttributes"]["EAN"]
-        data["isbn_10"] = book["ItemAttributes"]["ISBN"]
-        data["author"] = book["ItemAttributes"]["Author"]
+        if "Publisher" in book["ItemAttributes"]:
+            data["publisher"] = book["ItemAttributes"]["Publisher"]
+        else:
+            data["publisher"] = ""
+
+        if "EAN" in book["ItemAttributes"]:
+            data["isbn_13"] = book["ItemAttributes"]["EAN"]
+        elif "EISBN" in book["ItemAttributes"]:
+            data["isbn_13"] = book["ItemAttributes"]["EISBN"]
+        else:
+            data["isbn_13"] = ""
+
+        if "ISBN" in book["ItemAttributes"]:
+            data["isbn_10"] = book["ItemAttributes"]["ISBN"]
+        else:
+            data["isbn_10"] = ""
+
+        if "Author" in book["ItemAttributes"]:
+            data["author"] = book["ItemAttributes"]["Author"]
+        else:
+            data["author"] = ""
+            
         data["more"] = book["DetailPageURL"]
 
         if "EditorialReviews" in book:
@@ -163,3 +181,21 @@ def get_tags(nodes):
     else:
         tags = nodes['Name']
     return tags
+
+def generate_codes(request):
+    from .models import Barcodes
+    from barcodes import MyBarcodeDrawing
+    import datetime
+    code = int(datetime.datetime.now().strftime('%m%d%y%H%M%S'))
+    data = []
+    for val in xrange(int(request.GET['codes'])):
+        code = code + (val + 1)
+        text = str(code)
+        b = MyBarcodeDrawing(text)
+        b.save(formats=['png'],outDir='assets/images/barcode/',fnRoot=text)
+
+        bcode = Barcodes(barcode = text)
+        bcode.save()
+
+        data.append(text)
+    return HttpResponse(json.dumps(data))
