@@ -14,7 +14,6 @@ from unipath import Path
 PROJECT_ROOT = Path(__file__).ancestor(3)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -89,7 +88,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_PRECOMPILER_ROOT = PROJECT_ROOT.child('scss')
+STATIC_PRECOMPILER_ROOT = PROJECT_ROOT.child('assets')+"/scss"
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -148,3 +147,11 @@ STATIC_PRECOMPILER_COMPILERS = (
 #     PROJECT_ROOT.child('assets'),
 
 # )
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'compiler.filters.CustomFilterBackend',
+    ),
+}

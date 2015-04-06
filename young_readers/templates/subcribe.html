@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block mainContent %}
+<div class="container" ng-controller="subcriptionController">
+    <div class="row">
+       <h1 class="txt-c f-48 mt-20 p-10">
+           Ready to grab this Sweety?
+       </h1>
+       <h2 class="txt-c f-18 mt-10">
+           These are probably the best prices ever offered.
+       </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="row p-0 noty--reg">
+                <div class="row pt-0">
+                    <h1 class="b-blue p-20 f-36 txt-c f-white">
+                        Basic
+                    </h1>
+                    <h2 class=" b-blue f-20 pb-20 txt-c f-white">
+                        For 3 months
+                    </h2>
+                </div>
+                <div class="row">
+                    <h3 class="f-blue f-28 txt-c p-10">
+                         Rs.<b>500</b>/-
+                    </h3>
+                </div>
+                <div class="row pl-20 pr-20">
+                    <ul class="list-c">
+                        <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                        <li><strong>Organized</strong> Layers and Folders</li>
+                        <li><strong>Vector Based</strong> Graphics</li>
+                        <li><strong>Documentation</strong></li>
+                        <li><strong>Free Fonts</strong></li>
+                    </ul>
+                </div>
+                <div class="row txt-c">
+                    <button class="btn b-blue f-white" ng-click="payNow('basic')">Pay Now</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="row p-0 noty--reg">
+                <div class="row pt-0">
+                    <h1 class="b-blue p-20 f-36 txt-c f-white">
+                        Plus
+                    </h1>
+                    <h2 class=" b-blue f-20 pb-20 txt-c f-white">
+                        For 6 months
+                    </h2>
+                </div>
+                <div class="row">
+                    <h3 class="f-blue f-28 txt-c p-10">
+                         Rs.<b>800</b>/-
+                    </h3>
+                </div>
+                <div class="row pl-20 pr-20">
+                    <ul class="list-c">
+                        <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                        <li><strong>Organized</strong> Layers and Folders</li>
+                        <li><strong>Vector Based</strong> Graphics</li>
+                        <li><strong>Documentation</strong></li>
+                        <li><strong>Free Fonts</strong></li>
+                    </ul>
+                </div>
+                <div class="row txt-c">
+                    <button class="btn b-blue f-white" ng-click="payNow('plus')">Pay Now</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="row p-0 noty--reg">
+                <div class="row pt-0">
+                    <h1 class="b-blue p-20 f-36 txt-c f-white">
+                        Premium
+                    </h1>
+                    <h2 class=" b-blue f-20 pb-20 txt-c f-white">
+                        For 12 months
+                    </h2>
+                </div>
+                <div class="row">
+                    <h3 class="f-blue f-28 txt-c p-10">
+                         Rs.<b>1200</b>/-
+                    </h3>
+                </div>
+                <div class="row pl-20 pr-20">
+                    <ul class="list-c">
+                        <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                        <li><strong>Organized</strong> Layers and Folders</li>
+                        <li><strong>Vector Based</strong> Graphics</li>
+                        <li><strong>Documentation</strong></li>
+                        <li><strong>Free Fonts</strong></li>
+                    </ul>
+                </div>
+                <div class="row txt-c">
+                    <button class="btn b-blue f-white" ng-click="payNow('premium')">Pay Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

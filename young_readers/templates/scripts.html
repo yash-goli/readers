@@ -22,8 +22,16 @@
         'csrfToken' : "{{csrf_token}}",
         'userSiteObj' : (function(){
             var data = {
+                auth_thru:'{{user.auth_thru}}',
+                lookup:'{{user.id}}',
                 is_superuser:'{{user.is_superuser}}'
             };
+            data.is_superuser = data.is_superuser === "True" ? true : false;
+            if (data['lookup'] == "None") {
+                data['lookup'] = -1;
+            } else {
+                data['lookup'] = parseInt(data['lookup']);
+            }
             return data;
         })(),
         'staticLink' : "{% static ""%}",

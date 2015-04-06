@@ -3,14 +3,11 @@
 		<h1 class="txt-c f-60 pt-35 f-white">Young Readers CLC</h1>
 		<h2 class="txt-c f-28 pt-20 f-white">Over 4000 books for children</h2>
 		<div class="row pt-35">
-			<div class="search-wrap col-lg-6 col-sm-push-3">
+			<div class="search-wrap col-lg-6 col-md-8 col-sm-10 col-lg-push-3 col-md-push-2 col-sm-push-1">
 				<div class="input-group">
-					<!-- <div class="seacrh-type">
-						<ul>
-							<li></li>
-						</ul>
-					</div> -->
-					<input class="full-w f-20" type="text" placeholder="Search Books"> 
+					<div class="group-addon">
+						<input class="full-w f-20 p-10" type="text" placeholder="Search Books"> 
+					</div>
 					<span class="input-group-addon b-blue f-white">
 						<i class="fa fa-search"></i>&nbsp;Search
 					</span>
@@ -21,20 +18,28 @@
 </section>
 <div class="container-f books-wrapper">
 	<div class="row pt-35">
-		<h2 class="f-28 p-15 txt-c col-sm-8 col-sm-push-2">Latest Books</h2>
+		<h2 class="f-28 p-15 txt-c col-xs-8 col-xs-push-2">Latest Books</h2>
 	</div>
 	<div class="row pl-35 pr-35">
-		<div class="col-lg-2 pb-10" ng-repeat="book in books">
+		<div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 pb-10" ng-repeat="book in books">
 			<div class="book-wrap">
 				<div class="book-img" style="background-image:url({[book.image]})"></div>
 				<div class="book-detail">
-					<a href="{[book.title]}" class="pt-10 pl-10">{[book.title]}</a>
-
-					<div class="add-cart">
-						<button class="btn b-blue f-white txt-c f-12">
-							<i class="fa fa-shopping-cart"></i>&nbsp;Add
-						</button>
-					</div>
+					<a href="/book_detail/{[book.book_id]}/" class="pt-10 pl-10 f-16 h-under block" title="{[book.title]}">{[book.title | trimTitleName:60]}</a>
+					<span class="f-13">
+						by <span class="f-medium-grey2">{[book.author]}</span>
+					</span>
+				</div>
+				<div class="add-cart" ng-if="look_up !== -1 && !is_super">
+					<button class="btn b-red f-white txt-c f-16 mb-15" ng-click="remove_it(book)" ng-if="book.add_cart">
+						<i class="fa fa-cart-arrow-down"></i>&nbsp;Remove
+					</button>
+					<button class="btn b-green f-white txt-c f-16 mb-15" ng-click="rent_it(book)" ng-if="!book.add_cart">
+						<i class="fa fa-cart-plus"></i>&nbsp;Rent
+					</button>
+					<a href="/book_detail/{[book.book_id]}/" class="btn b-dark-grey2 f-white txt-c f-16">
+						Explore
+					</a>
 				</div>
 			</div>
 		</div>

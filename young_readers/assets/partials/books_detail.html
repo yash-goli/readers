@@ -1,0 +1,115 @@
+<div class="container">
+	<div class="row pt-35">
+		<div class="col-sm-12">
+			<div class="col-sm-4 txt-c">
+				<div class="row book-image">
+					<img src="{[book.image]}" alt="{[book.title]}">
+				</div>
+			</div>
+			<div class="col-sm-8 pl-35">
+				<div class="row bdr-b">
+					<h1 class="f-28">
+					 	{[book.title]}&nbsp;<span class="f-medium-grey1 f-28">({[book.cover_type]})</span>
+					</h1>
+					<span class="block mt-10">
+						by: <span class="f-medium-grey2">{[book.author]}</span>
+					</span>
+				</div>
+				<div class="row pt-35">
+					<div class="col-xs-6">
+						<div class="row">
+							<h4 class="f-20 txt-c mb-10">Check availibility at</h4>
+							<div class="input-group">
+	    						<input type="txt" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Enter area pin-code" ng-model="pincode"><span class="input-group-addon">
+	    							check
+	    						</span> 
+	    					</div>
+						</div>
+						<div class="row">
+							<div class="row bdr-t bdr-b txt-c b-lite-grey1">
+								<div class="row p-0">
+									<button class="col-xs-6 btn b-blue f-white col-xs-push-3 mb-10">
+								 		<i class="fa fa-cart-plus"></i>&nbsp;Rent
+								 	</button>
+								</div>
+							 	<div class="row p-0">
+								 	<button class="col-xs-6 btn b-red f-white col-xs-push-3 mb-10">
+								 		<i class="fa fa-reply"></i>&nbsp;Return
+								 	</button>
+							 	</div>
+							 	<div class="row p-0">
+								 	<button class="col-xs-6 btn b-green f-white col-xs-push-3">
+								 		<i class="fa fa-bookmark"></i>&nbsp;Add to Wishlist
+								 	</button>
+							 	</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 bdr-l">
+						<div class="row">
+							<h4 class="f-20">Delivery Details</h4>
+							<ul class="pl-30 mt-10 disc">
+								<li class="p-5">Delivery in <span>1-2</span> business days</li>
+								<li class="p-5">Same day shipping</li>
+							</ul>
+							<h4 class="f-20 mt-20">Shipping Details</h4>
+							<ul class="pl-30 mt-10 disc">
+								<li class="p-5">Shipping charges of INR 40 on order below 3 books</li>
+								<li class="p-5">Cash on Delivery charges of INR 10</li>
+								<li class="p-5"><span class="fontsweight">FREE </span>return shipping</li>
+							</ul>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row pt-20">
+		<div class="col-xs-6">
+			<div class="row">
+				<h3 class="f-22 b-lite-grey1 p-10">Book Summary</h3>
+			</div>
+			<div class="row">
+				<p>
+					{[book.description]}
+				</p>
+			</div>
+		</div>
+		<div class="col-xs-6 bdr-l">
+			<div class="row">
+				<h3 class="f-22 b-lite-grey1 p-10">Book Detail</h3>
+			</div>
+			<div class="row">
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">Author</div>
+					<div class="col-xs-8 p-10">{[book.author]}</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">Publisher</div>
+					<div class="col-xs-8 p-10">{[book.publisher]}</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">ISBN-10</div>
+					<div class="col-xs-8 p-10">{[book.ISBN_10]}</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">ISBN-13</div>
+					<div class="col-xs-8 p-10">{[book.ISBN_13]}</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">Language</div>
+					<div class="col-xs-8 p-10">English</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">Binding</div>
+					<div class="col-xs-8 p-10">{[book.cover_type]}</div>
+				</div>
+				<div class="row p-0 bdr-b">
+					<div class="col-xs-4 p-10 bdr-r">Number of Pages</div>
+					<div class="col-xs-8 p-10">{[book.pages]}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

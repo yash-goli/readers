@@ -166,6 +166,221 @@ mainApp.factory('transformRequestAsFormPost',[
         }
 }]);
 
+mainApp.factory('transactions',['$http', '$q', 'Constants', 
+    function($http, $q, Constants){
+        var transactions = {};
+        transactions.create = function (data) {
+            var options = {
+                'method': 'POST',
+                'url': '/api/transactions/',
+                'data' : data,
+            };
+            return transactions.core(options);
+        };
+        transactions.read = function(data){
+            var options = {
+                'method': 'GET',
+                'url': '/api/transactions/'
+            };
+            if (data.hasOwnProperty('ID')) {
+                options.url = options.url+ID;
+            }
+            if (data.hasOwnProperty('params')) {
+                options.params = data.params
+            }
+            return transactions.core(options);
+        };
+        transactions.update = function(ID, data){
+            var options = {
+                'method': 'PATCH',
+                'url': '/api/transactions/'+ID,
+                'data' : data,
+            };
+            return transactions.core(options);
+        };
+        transactions.delete = function(ID){
+            var options = {
+                'method': 'DELETE',
+                'url': '/api/transactions/'+ID,
+            };
+            return transactions.core(options);
+        };
+        transactions.core = function (options) {
+            var deferer = $q.defer();
+            var promise = deferer.promise;
+            $http(options).success(function(data){
+                deferer.resolve(data);
+            }).error(function(data){
+                var out = {};
+                out.status = 'error';
+                out.result = data;
+                deferer.reject(data);
+            });
+            return promise;
+        }
+        return{
+            'create' : transactions.create,
+            'read'   : transactions.read,
+            'update' : transactions.update,
+            'delete' : transactions.delete
+        };
+    }]);
+
+mainApp.factory('wishlist',['$http', '$q', 'Constants', 
+    function($http, $q, Constants){
+        var wishlist = {};
+        wishlist.create = function (data) {
+            var options = {
+                'method': 'POST',
+                'url': '/api/wishlist/',
+                'data' : data,
+            };
+            return wishlist.core(options);
+        };
+        wishlist.read = function(data){
+            var options = {
+                'method': 'GET',
+                'url': '/api/wishlist/'
+            };
+            if (data.hasOwnProperty('ID')) {
+                options.url = options.url+ID;
+            }
+            if (data.hasOwnProperty('params')) {
+                options.params = data.params
+            }
+            return wishlist.core(options);
+        };
+        wishlist.update = function(ID, data){
+            var options = {
+                'method': 'PATCH',
+                'url': '/api/wishlist/'+ID,
+                'data' : data,
+            };
+            return wishlist.core(options);
+        };
+        wishlist.delete = function(ID){
+            var options = {
+                'method': 'DELETE',
+                'url': '/api/wishlist/'+ID,
+            };
+            return wishlist.core(options);
+        };
+        wishlist.core = function (options) {
+            var deferer = $q.defer();
+            var promise = deferer.promise;
+            $http(options).success(function(data){
+                deferer.resolve(data);
+            }).error(function(data){
+                var out = {};
+                out.status = 'error';
+                out.result = data;
+                deferer.reject(data);
+            });
+            return promise;
+        }
+        return{
+            'create':wishlist.create,
+            'read':wishlist.read,
+            'update':wishlist.update,
+            'delete':wishlist.delete
+        };
+    }]);
+
+mainApp.factory('addresses',['$http', '$q', 'Constants', 
+    function($http, $q, Constants){
+        var address = {};
+        address.create = function (data) {
+            var options = {
+                'method': 'POST',
+                'url': '/api/addresses/',
+                'data' : data,
+            };
+            return address.core(options);
+        };
+        address.read = function(data){
+            var options = {
+                'method': 'GET',
+                'url': '/api/addresses/'
+            };
+            if (data.hasOwnProperty('ID')) {
+                options.url = options.url+ID;
+            }
+            if (data.hasOwnProperty('params')) {
+                options.params = data.params
+            }
+            return address.core(options);
+        };
+        address.update = function(ID, data){
+            var options = {
+                'method': 'PATCH',
+                'url': '/api/addresses/'+ID,
+                'data' : data,
+            };
+            return address.core(options);
+        };
+        address.core = function (options) {
+            var deferer = $q.defer();
+            var promise = deferer.promise;
+            $http(options).success(function(data){
+                deferer.resolve(data);
+            }).error(function(data){
+                var out = {};
+                out.status = 'error';
+                out.result = data;
+                deferer.reject(data);
+            });
+            return promise;
+        }
+        return{
+            'create':address.create,
+            'read':address.read,
+            'update':address.update
+        };
+    }]);
+
+mainApp.factory('profile',['$http', '$q', 'Constants', function($http, $q, Constants){
+    var profile = {};
+    profile.read = function(ID){
+        var deferer = $q.defer();
+        var promise = deferer.promise;
+        var options = {
+            'method': 'GET',
+            'url': '/api/profile/'+ID,
+        };
+        $http(options).success(function(data){
+            deferer.resolve(data);
+        }).error(function(data){
+            var out = {};
+            out.status = 'error';
+            out.result = data;
+            deferer.reject(data);
+        });
+        return promise;
+    };
+    profile.update = function(ID, data){
+        var deferer = $q.defer();
+        var promise = deferer.promise;
+        var options = {
+            'method': 'PATCH',
+            'url': '/api/profile/'+ID,
+            'data' : data,
+        };
+        $http(options).success(function(data){
+            deferer.resolve(data);
+        }).error(function(data){
+            var out = {};
+            out.status = 'error';
+            out.result = data;
+            deferer.reject(data);
+        });
+        return promise;
+    };
+    return{
+        'read':profile.read,
+        'update':profile.update
+    };
+    }]);
+
 
 mainApp.factory('books', ['$http', '$q', 'Constants', function($http, $q, Constants){
     var books = {};
@@ -238,11 +453,57 @@ mainApp.factory('books', ['$http', '$q', 'Constants', function($http, $q, Consta
 
 }]);
 
-mainApp.factory('transactions', ['$scope', 'Constants', function(){
-
-
-
-}]);
+mainApp.factory('books_list',['$http', '$q', 'Constants', 
+    function($http, $q, Constants){
+        var books_list = {};
+        books_list.create = function (data) {
+            var options = {
+                'method': 'POST',
+                'url': '/api/books_list/',
+                'data' : data,
+            };
+            return books_list.core(options);
+        };
+        books_list.read = function(data){
+            var options = {
+                'method': 'GET',
+                'url': '/api/books_list/'
+            };
+            if (data.hasOwnProperty('ID')) {
+                options.url = options.url+ID;
+            }
+            if (data.hasOwnProperty('params')) {
+                options.params = data.params
+            }
+            return books_list.core(options);
+        };
+        books_list.update = function(ID, data){
+            var options = {
+                'method': 'PATCH',
+                'url': '/api/books_list/'+ID,
+                'data' : data,
+            };
+            return books_list.core(options);
+        };
+        books_list.core = function (options) {
+            var deferer = $q.defer();
+            var promise = deferer.promise;
+            $http(options).success(function(data){
+                deferer.resolve(data);
+            }).error(function(data){
+                var out = {};
+                out.status = 'error';
+                out.result = data;
+                deferer.reject(data);
+            });
+            return promise;
+        }
+        return{
+            'create':books_list.create,
+            'read':books_list.read,
+            'update':books_list.update
+        };
+    }]);
 
 
 

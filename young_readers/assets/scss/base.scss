@@ -28,7 +28,7 @@ $float : (
     'pull-l' : left,
     'pull-r' : right,
 );
-$font-sizes : 8 9 10 11 12 14 16 18 20 22 24 26 28 36 48 60 72;
+$font-sizes : 8 9 10 11 12 13 14 16 18 20 22 24 26 28 36 48 60 72;
 $box-sizes : 0 2 5 10 15 20 15 20 25 30 35;
 html{
     font: 400 100%/1.65 Lato,$helvetica;
@@ -41,10 +41,22 @@ a {
     color: map-get($color, dark-grey2);
     text-decoration: none;
 }
+p{
+    line-height: 1.65;
+    margin:10px 0px;
+}
+strong,b{font-weight: 900;}
+.block{display: block;}
+.csr-p{cursor: pointer;}
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+@mixin border($bdr_color){
+    border: 1px solid map-get($color, $bdr_color);
+}
 @include grid();
-#{$form-inputs} {
+.form-inputs {
     display: inline-block;
-    height: 34px;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -58,7 +70,8 @@ a {
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;}
-textarea{height: auto;}
+
+textarea{font-family:Lato;height: auto;resize:none;}
 .btn {
     display: inline-block;
     padding: 6px 16px;
@@ -76,10 +89,9 @@ textarea{height: auto;}
     user-select: none;
     background-image: none;
     border: 1px solid transparent;}
-button[disabled]{
-    color: #fff;
-    background-color: #ccd1d9;
-    border-color: #ccd1d9;
+button[disabled],input[disabled]{
+    background-color: map-get($color, lite-grey2);;
+    border-color: map-get($color, lite-grey2);;
 }
 img {
     border: 0;
@@ -137,12 +149,17 @@ label,.sub{
     white-space: nowrap;
     vertical-align: middle;
 }
-.input-group input, .input-group-addon, .input-group-btn {
+.input-group input, .input-group-addon, .input-group-btn, .group-addon {
     display: table-cell;
 }
 .under{text-decoration: underline;}
-.h-under:hover{text-decoration: underline;}
-.ng-hide{display: none !important;}
+.h-under:hover, .h-under:active{
+    color: map-get($color, blue);
+    text-decoration: underline;}
+.ng-hide{
+    position: absolute;
+    left: -9999px;
+}
 
 .bd{border: 1px solid map-get($color, white);}
 @each $name, $value in $color {
@@ -201,6 +218,27 @@ label,.sub{
         padding-left: $box-size*1px;
     }
 }
+table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-spacing: 0;
+    border-collapse: collapse;
+    thead{
+        tr{
+            th{
+                    vertical-align: bottom;
+            }
+        }
+    }
+    th,td{
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        @include border(lite-grey2);
+    }
+}
 /*
 ========================================================
                 Login Style     
@@ -221,7 +259,15 @@ label,.sub{
                 Header Style     
 ========================================================*/
 header{
-    height: 50px;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 60px;
+    z-index: 10;
+}
+.maincontent {
+    margin-top: 60px;
 }
 .prof-items{
     display: inline-block;
@@ -233,6 +279,16 @@ header{
         i{
             color: map-get($color, white);
             font-size: 1.25em;
+        }
+        .noty{
+            position: relative;
+            padding-bottom: 20px;
+            .count{
+                position: absolute;
+                top: -10px;
+                left: 15px;
+                padding: 2px 3px;
+            }
         }
     }
 }
@@ -267,7 +323,7 @@ header{
             i{
                 margin-right:10px;
             }
-            &:hover{
+            &:hover, &:hover a{
                 background-color: map-get($color, blue);
                 color: map-get($color, white);
             }
@@ -317,8 +373,9 @@ header{
         border-bottom:2px solid map-get($color, dark-grey2);
     }
     .book-wrap{
+        position: relative;
         width: 100%;
-        height: 320px;
+        height: 300px;
         border:1px solid map-get($color, lite-grey2);
         padding: 0px;
         .book-img{
@@ -330,19 +387,261 @@ header{
         }
         .book-detail{
             position: relative;
-            height: 120px;
+            height: 100px;
+            padding-bottom: 25px;
             a{
-                display: inline-block;
+                display: block;
             }
-            .add-cart{
-                border-top:1px solid map-get($color, lite-grey2);
-                padding: 5px;
+            &>span {
                 position: absolute;
-                bottom: 0px;
-                left: 0px;
-                text-align: center;
-                width: 100%;
+                bottom: 10px;
+                left: 10px;
             }
         } 
+        .add-cart{
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+        &:hover .add-cart{
+            background-color: rgba(230, 233, 237, 0.5);
+            padding: 105px 5px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.noty--reg{
+    border: 1px solid map-get($color, blue);
+}
+.bdr-red{@include border(red);}
+.bdr-green{@include border(green);}
+.bdr-blue{@include border(blue);}
+.bdr-gray{@include border(lite-grey2);}
+.bdr-t{border-top: 1px solid map-get($color, lite-grey2);}
+.bdr-b{border-bottom: 1px solid map-get($color, lite-grey2);}
+.bdr-l{border-left: 1px solid map-get($color, lite-grey2);}
+.bdr-r{border-right: 1px solid map-get($color, lite-grey2);}
+.disc{
+    list-style: disc;
+}
+@mixin list($txt, $size) {
+    li{
+        text-align: $txt;
+        font-size: $size;
+        padding: 10px;
+        border-bottom: 1px solid map-get($color, blue);
+        &:last-child{
+            border-width: 0px;
+        }
+    }
+} 
+.list-c{
+    @include list(center,0.875em);
+}
+.list-l{
+    @include list(left, 0.875em);
+    li{
+        cursor: pointer;
+        &:hover{
+            color: #fff;
+            background-color: map-get($color, lite-blue);
+        }
+    }
+}
+
+
+.wishlist{
+    display: none;
+    width: 330px;
+    background-color: #fff;
+    border: 1px solid #e6e9ed;
+    position: absolute;
+    right: 0;
+    top: 34px;
+    .contents{
+        .head-sec{
+            border-bottom: 1px solid #e6e9ed;
+        }
+        .footer-sec{
+            border-top: 1px solid #e6e9ed;
+        }
+    }
+}
+.noty:hover .wishlist{
+    display: block;
+}
+
+.orders{
+    .orders--image{
+        width: 95px;
+    }
+    .orders--footer{
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 80%;
+        text-align: right;
+    }
+    .book-qty {
+        width: 25px;
+        text-align: center;
+        background: #fff;
+        padding: 2px;
+        zoom: 1;
+    }
+}
+
+.book-item{
+    height: 130px;
+    img{
+        height: 100px;
+    }
+}
+.book-image{
+    margin:auto;
+    width: 250px;
+}
+
+/** modal **/
+.modal-open {
+    overflow: hidden;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+.modal.fade .modal-dialog {
+    -webkit-transition: -webkit-transform,opacity .5s ease-out;
+         -o-transition:      -o-transform,opacity .5s ease-out;
+            transition:         transform,opacity .5s ease-out;
+    -webkit-transform: translate3d(0, -40px, 0);
+            transform: translate3d(0, -40px, 0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+}
+.modal.in .modal-dialog {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+.modal-content {
+    position: relative;
+    background-color: #f5f7fa;
+    -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 2px;
+    outline: 0;
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+.modal-backdrop.fade {
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+.modal-header {
+    min-height: 16.42857143px;
+    padding: 10px 10px 10px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.modal-header .close {
+    margin-top: -2px;
+}
+.modal-title {
+    margin: 0;
+    line-height: 1.42857143;
+    font-size: 1.25em;
+}
+.modal-body {
+    width: 90%;
+    position: relative;
+    margin : 10px auto;
+    background-color : #fff;
+    border-radius : 2px;
+}
+.modal-body:after{
+    content: " ";
+    display: table;
+    clear: both;
+}
+.modal-footer {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+.modal-footer .btn + .btn {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+.modal-footer .btn-group .btn + .btn {
+    margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+    margin-left: 0;
+}
+.modal-scrollbar-measure {
+    position: absolute;
+    top: -9999px;
+    width: 50px;
+    height: 50px;
+    overflow: scroll;
+}
+.pop-close{
+    cursor: pointer;
+    position: absolute;
+    right: -30px;
+    top: 0;
+    font-size: 1.5em;
+}
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 600px;
+        margin: 30px auto;
+    }
+    .modal-sm {
+        width: 300px;
+    }
+}
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
     }
 }

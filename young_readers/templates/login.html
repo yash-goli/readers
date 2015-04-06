@@ -1,68 +1,83 @@
 {% extends "base.html" %}
 {% block mainContent %}
-<div class="container" ng-controller="accountController">
+<div class="container mt-35 pt-35" ng-controller="accountsController">
 	<div class="row mt-35">
-		<div class="col-lg-4 col-lg-push-4 login-wrap p-0" ng-init="login_tab='login'">
-			<div class="row txt-c f-20 b-lite-grey1 p-0 login-header">
-				<div class="col-sm-6 pt-20 pb-20" ng-click="login_tab='login'" ng-class="{'b-white':login_tab=='login' }">
-					Sign In
-				</div>
-				<div class="col-sm-6 pt-20 pb-20" ng-click="login_tab='register'"  ng-class="{'b-white':login_tab=='register' }">
-					Sign Up
-				</div>
-			</div>
-			<div class="row login-body p-10" ng-show="login_tab=='login'">
-				<div class="row">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<i class="fa fa-user"></i>
-						</span> 
-						<input type="text" class="full-w brtbr-0" placeholder="Email" ng-model="lemail">
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<i class="fa fa-key"></i>
-						</span> 
-						<input type="password" class="full-w brtbr-0" placeholder="Password" ng-model="lpwd">
-					</div>
-				</div>
-				<div class="row">
-					<a href="#" class="under sub">Forgot Password?</a>
-					<button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="login($event)">login</button>
-				</div>
-			</div>
-			<div class="row login-body p-10 ng-hide" ng-show="login_tab=='register'" ng-class="{block:login_tab=='register'}">
-				<div class="row">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<i class="fa fa-user"></i>
-						</span> 
-						<input type="text" class="full-w brtbr-0" placeholder="Name">
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<i class="fa fa-envelope"></i>
-						</span> 
-						<input type="text" class="full-w brtbr-0" placeholder="Email">
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<i class="fa fa-key"></i>
-						</span> 
-						<input type="password" class="full-w brtbr-0" placeholder="Password">
-					</div>
-				</div>
-				<div class="row">
-					<button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="register($event)">Register</button>
-				</div>
-			</div>
-		</div>
+        <div class="col-lg-8 col-lg-push-2">
+    		<div class="col-lg-8 col-lg-push-2 login-wrap p-0" ng-init="login_tab='login'" ng-if="!is_registered">
+    			<div class="row txt-c f-20 b-lite-grey1 p-0 login-header">
+    				<div class="col-xs-6 pt-20 pb-20" ng-click="login_tab='login'" ng-class="{'b-white':login_tab=='login' }">
+    					Sign In
+    				</div>
+    				<div class="col-xs-6 pt-20 pb-20" ng-click="login_tab='register'"  ng-class="{'b-white':login_tab=='register' }">
+    					Sign Up
+    				</div>
+    			</div>
+    			<div class="row login-body p-10" ng-show="login_tab=='login'">
+    				<div class="row">
+    					<div class="input-group">
+    						<span class="input-group-addon">
+    							<i class="fa fa-user"></i>
+    						</span> 
+    						<input type="text" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Email" ng-model="lemail">
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="input-group">
+    						<span class="input-group-addon">
+    							<i class="fa fa-key"></i>
+    						</span> 
+    						<input type="password" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Password" ng-model="lpwd">
+    					</div>
+    				</div>
+    				<div class="row">
+    					<a href="#" class="under sub">Forgot Password?</a>
+    					<button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="login($event, lemail, lpwd)">login</button>
+    				</div>
+    			</div>
+    			<div class="row login-body p-10 ng-hide" ng-show="login_tab=='register'" ng-class="{block:login_tab=='register'}">
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </span> 
+                            <input type="text" ng-model="rname" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </span> 
+                            <input type="text" ng-model="remail" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-key"></i>
+                            </span> 
+                            <input type="password" ng-model="rpwd" class="form-inputs full-w brtbr-0 pb-10 pt-10" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn b-lite-blue f-white pull-r col-sm-3" ng-click="register($event, rname, remail, rpwd)">Register</button>
+                    </div>
+    			</div>
+    		</div>
+    		<div class="row p-0" ng-if="is_registered">
+                <div class="col-xs-12 col-sm-8 noty--reg p-0 col-sm-push-2">
+                    <div class="noty--head txt-c b-blue f-white p-10">
+                        <i class="fa fa-info-circle"></i>&nbsp;Registration
+                    </div>
+                    <div class="noty--body txt-c p-10">
+                        You are successfully Registered, Please check you mail to conform your registration.
+                    </div>
+                    <div class="row txt-c">
+                        <button class="btn b-blue f-white" ng-click="reload()">click here to login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 </div>
 {% endblock %}

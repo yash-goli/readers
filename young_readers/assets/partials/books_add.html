@@ -1,11 +1,10 @@
 <div class="container-f">
-
 	<div class="row txt-c">
-		 <input type="text" ng-model="isbn" placeholder="Enter ISBN number">
+		 <input type="text" ng-model="isbn" placeholder="Enter ISBN number" class="form-inputs">
 		 <button ng-click="getBookData()" class="btn b-green f-white">get book</button>
 	</div>
 	<div class="container" ng-if="is_book">
-		<div class="row txt-r ">
+		<div class="row txt-r">
 			<button ng-click="save_book()" class="f-18 btn b-lite-red f-white">Save Book</button>
 		</div>
 		<div class="row">
@@ -18,7 +17,7 @@
 						<label>Title:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.title" class="full-w" placeholder="Book Title">
+						<input type="text" ng-model="book_data.title" class="full-w form-inputs" placeholder="Book Title">
 					</div>
 				</div>
 				<div class="row">
@@ -26,7 +25,7 @@
 						<label>ISBN-10:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.ISBN_10" class="full-w" placeholder="ISBN 10">
+						<input type="text" ng-model="book_data.ISBN_10" class="full-w form-inputs" placeholder="ISBN 10">
 					</div>
 				</div>
 				<div class="row">
@@ -34,7 +33,7 @@
 						<label>ISBN-13:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.ISBN_13" class="full-w" placeholder="ISBN 13">
+						<input type="text" ng-model="book_data.ISBN_13" class="full-w form-inputs" placeholder="ISBN 13">
 					</div>
 				</div>
 				<div class="row">
@@ -42,7 +41,7 @@
 						<label>Author:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.author" class="full-w" placeholder="Author">
+						<input type="text" ng-model="book_data.author" class="full-w form-inputs" placeholder="Author">
 					</div>
 				</div>
 				<div class="row">
@@ -50,7 +49,7 @@
 						<label>Publisher:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.publisher" class="full-w" placeholder="Publisher">
+						<input type="text" ng-model="book_data.publisher" class="full-w form-inputs" placeholder="Publisher">
 					</div>
 				</div>
 				<div class="row">
@@ -58,10 +57,11 @@
 						<label>Cover Type:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<select ng-model="book_data.cover_type" class="col-lg-6 col-xs-12">
-							<option value="paperback" selected>Paperback</option>
-							<option value="hardcover">Hardcover</option>
-						</select>
+						<input type="text" ng-model="book_data.cover_type" class="col-lg-6 col-xs-12 form-inputs" placeholder="Publisher">
+						<!-- <select class="col-lg-6 col-xs-12 form-inputs" name="SelectedCity" ng-model="book_data.cover_type"> 
+							<option value="Paperback" selected>Paperback</option>
+							<option value="Hardcover">Hardcover</option> 
+    					</select> -->
 					</div>
 				</div>
 				<div class="row">
@@ -69,7 +69,15 @@
 						<label>Description:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<textarea ng-model="book_data.description" placeholder="Description" class="full-w" rows="5"></textarea>
+						<textarea ng-model="book_data.description" placeholder="Description" class="full-w form-inputs" rows="5"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-lg-3 txt-c f-20">
+						<label>Pages:</label>
+					</div>
+					<div class="col-lg-9 col-xs-12">
+						<input type="text" ng-model="book_data.pages" class="col-lg-6 col-xs-12 form-inputs" placeholder="Books Available">
 					</div>
 				</div>
 				<div class="row">
@@ -77,7 +85,17 @@
 						<label>Books Available:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.total_count" class="col-lg-6 col-xs-12" placeholder="Books Available">
+						<input type="text" ng-model="book_data.total_count" class="col-lg-6 col-xs-12 form-inputs" placeholder="Books Available">
+					</div>
+				</div>
+				<div class="row" ng-if="book_data.total_count > 0">
+					<div class="row p-0" ng-repeat="book_id in book_ids">
+						 <div class="col-xs-12 col-lg-3 txt-c f-20">
+							<label>Barcode ID {[$index + 1]}:</label>
+						</div>
+						<div class="col-lg-9 col-xs-12 mb-5">
+							<input type="text" ng-model="book_id.barcode_id" class="col-lg-6 col-xs-12 form-inputs" placeholder="Book Barcode ID {[$index + 1]}">
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -85,7 +103,7 @@
 						<label>Book Penalty:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<input type="text" ng-model="book_data.book_penalty" class="col-lg-7 col-xs-12" placeholder="Amount to be covered when the book is lost">
+						<input type="text" ng-model="book_data.book_penalty" class="form-inputs col-lg-7 col-xs-12" placeholder="Amount to be covered when the book is lost">
 					</div>
 				</div>
 				<div class="row">
@@ -93,10 +111,13 @@
 						<label>Tags:</label>
 					</div>
 					<div class="col-lg-9 col-xs-12">
-						<span ng-repeat="tag in tags" class="label label-info f-18 mr-5 mb-5">{[tag]}</span>
+						<span ng-repeat="tag in tags" class="label label-info f-14 mr-5 mb-5">{[tag]}</span>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="row txt-r ">
+			<button ng-click="save_book()" class="f-18 btn b-lite-red f-white">Save Book</button>
 		</div>
 		<div class="row txt-c f-18">
 			<a href="{[more]}" class="btn b-lite-green f-white" target="_blank">Click Here to get more Details of book</a>

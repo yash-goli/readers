@@ -1,52 +1,111 @@
 {% load static %}
 <header class="b-blue">
-	<div class="row">
-		<div class="col-sm-4 col-sm-push-1">
-			<h2 class="f-20 f-white pt-5">
-				Young Readers
-			</h2>
-		</div>
-		<div class="col-lg-4 pull-r col-sm-pull-1 txt-r">
-			{% if user.is_authenticated %}
-				<div class="prof-items">
-					<ul>
-						<li>
-							<i class="fa fa-bell"></i>
-						</li>
-						<li>
-							<i class="fa fa-bookmark"></i>
-						</li>
-						<li>
-							<i class="fa fa-shopping-cart"></i>
-						</li>
-					</ul>
-				</div>
-				<div class="acc-lo">
-					<a href="#" class="f-white">{{user}}&nbsp;<i class="fa fa-sort-desc f-14"></i></a>
-					<ul class="txt-l">
-						{% if user.is_superuser %}
-							<li>
-								<a href="books/add">
-									<i class="fa fa-book"></i>&nbsp;Add Book
-								</a>
-							</li>
-							<li>
-								<a href="books/barcodes">
-									<i class="fa fa-barcode"></i>&nbsp;Add Barcode
-								</a>
-							</li>
-						{% else %}
-							<li><i class="fa fa-shopping-cart"></i>&nbsp;My Orders</li>
-							<li><i class="fa fa-map-marker"></i>&nbsp;Address Book</li>
-							<li><i class="fa fa-user"></i>&nbsp;My Profile</li>
-							<li><i class="fa fa-key"></i>&nbsp;Change Password</li>
-						{% endif %}
-						<li ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</li>
-					</ul>
-				</div>
-			{% else %}
-				<button class="btn f-white b-blue bd" ng-click="redirect('/login/')">Sign In/Sign Up</button>
-			{% endif %}
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-push-1">
+            <h2 class="f-20 f-white pt-5">
+                Young Readers
+            </h2>
+        </div>
+        <div class="col-lg-2 pull-r col-sm-pull-1 txt-r">
+            {% if user.is_authenticated %}
+                <div class="prof-items" ng-if="!checkout && (look_up !== -1 && !is_super)">
+                    <ul>
+                        <li>
+                            <div class="noty noty-bell">
+                                <a href="#">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="f-12 f-white b-red count noty-bell--count" ngCloak ng-if="noty_bell > 0">{[noty_bell]}</span>
+                                </a>
+                                <!-- <div class="wishlist show" ng-if="noty_bell > 0">
+                                    <div class="arrow" style="left: 110.5px;"></div>
+                                    <div class="contents">
+                                        <div class="section">
+                                            <div class="big">Wishlist (3 items)</div>
+                                        </div>
+                                        <div class="items">
+                                            <div class="section">
+                                                <a href="http://www.myntra.com/Jeans/John-Players/John-Players-Men-Blue-Slim-Fit-Jeans/56828/buy" class="item"><img height="110" width="80" src="http://myntra.myntassets.com/images/style/properties/John-Players-Men-Blue-Slim-Fit-Jeans_2a4d51322412bf7855db88eec2ea2de5_images_96_128_mini.jpg">
+                                                    <div class="brand">John</div>
+                                                </a>
+                                                <a href="http://www.myntra.com/Shirts/Mast--Harbour/Mast--Harbour-Men-Grey--Blue-Checked-Slim-Fit-Casual-Shirt/590503/buy" class="item"><img height="110" width="80" src="http://myntra.myntassets.com/images/style/properties/Mast-&amp;-Harbour-Men-Grey-&amp;-Blue-Checked-Slim-Fit-Casual-Shirt_28349524c649b05ba915d30cf616dca9_images_96_128_mini.jpg">
+                                                    <div class="brand">Mast</div>
+                                                </a>
+                                                <a href="http://www.myntra.com/Shirts/Harvard/HARVARD-Men-Purple-PPo-Scholar-Slim-Fit-Shirt/453747/buy" class="item"><img height="110" width="80" src="http://myntra.myntassets.com/image/style/properties/453747/HARVARD-Men-Purple-PPo-Scholar-Slim-Fit-Shirt_1_42530e84a9d7f848f2f20231a78332f9.jpg">
+                                                    <div class="brand">HARVARD</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="section center"><a href="http://www.myntra.com/wishlist" target="_self" class="btn-view button fill">View Wishlist</a>
+                                        </div>
+                                    </div>
+                                </div>
+ -->
+                            </div>
+                        </li>
+                        <!-- <li>
+                            <div class="noty noty-wish">
+                                <a href="#">
+                                    <i class="fa fa-bookmark"></i>
+                                    <span class="f-12 f-white b-red count noty-wish--count" ngCloak ng-if="noty_wish > 0">{[noty_wish]}</span>
+                                </a>
+                            </div>
+                        </li> -->
+                        <li>
+                            <div class="noty noty-cart">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span class="f-12 f-white b-red count noty-cart--count" ngCloak ng-if="noty_cart > 0">{[noty_cart]}</span>
+                                </a>
+                                <div class="wishlist" ng-if="noty_cart > 0">
+                                    <div class="contents">
+                                        <div class="head-sec row b-lite-grey1 txt-l">
+                                            <span class="f-16 pl-10">Rentlist ({[wishlist.length]} items)</span>
+                                        </div>
+                                        <div class="row items">
+                                            <div class="col-xs-4 mb-10" ng-repeat="item in wishlist">
+                                                <a href="/book_detail/{[item.book_id]}" class="item txt-c" target="_self">
+                                                    <img height="110" width="80" src="{[item.image]}">
+                                                    <span class="txt-l f-dark-grey2 f-12 pull-l pt-5" title="{[item.title]}">{[item.title | trimTitleName:12]}</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="footer-sec row txt-c b-lite-grey1">
+                                            <a href="/books/rentlist/" target="_self" class="btn b-green f-white">Bag it</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="acc-lo">
+                    <a href="#" class="f-white">{{user}}&nbsp;<i class="fa fa-sort-desc f-14"></i></a>
+                    <ul class="txt-l">
+                        {% if user.is_superuser %}
+                            <li>
+                                <a href="/books/add">
+                                    <i class="fa fa-book"></i>&nbsp;Add Book
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/books/barcodes">
+                                    <i class="fa fa-barcode"></i>&nbsp;Add Barcode
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="/account/">
+                                    <i class="fa fa-shopping-cart"></i>&nbsp;My Account
+                                </a>
+                            </li>
+<!--                            <li ng-click="redirect('/subcribe/')"><i class="fa fa-rss"></i>&nbsp;Subcribe</li>-->
+                        {% endif %}
+                        <li ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</li>
+                    </ul>
+                </div>
+            {% else %}
+                <button class="btn f-white b-blue bd" ng-click="redirect('/login/')">Sign In/Sign Up</button>
+            {% endif %}
+        </div>
+    </div>
 </header>

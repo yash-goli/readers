@@ -1,0 +1,35 @@
+<div class="modal-header  pos-r" >
+    <h3 class="txt-c f-20">Add New Address</h3>
+    <i class="fa fa-times pop-close csr-p f-lite-grey1" ng-click="cancel()"></i>
+</div>
+<div class="row">
+    <div class="col-xs-8 col-xs-push-2">
+        <div class="row">
+            <input type="text" class="full-w form-inputs" placeholder="Name" ng-model="name">
+        </div>
+        <div class="row">
+            <textarea class="full-w form-inputs" placeholder="Street Address" maxlength="250" ng-model="address" rows="4"></textarea>
+        </div>
+        <div class="row">
+            <input type="text" class="full-w form-inputs" placeholder="Landmark" ng-model="landmark">
+        </div>
+        <div class="row">
+            <input type="text" disabled="disabled" ng-model="state" class="form-inputs">
+        </div>
+        <div class="row">
+            <input type="text" disabled="disabled" ng-model="country" class="form-inputs">
+        </div>
+        <div class="row">
+            <input type="text" placeholder="Pincode" ng-model="pincode" class="form-inputs">
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <span class="input-group-addon">+91</span> 
+                <input type="text" placeholder="Mobile Number" ng-model="address_mobile" class="form-inputs">
+            </div>
+        </div>
+        <div class="row txt-c">
+            <button class="btn b-blue f-white" ng-click="add_new_address()">Save Changes</button>
+        </div>
+    </div>
+</div>

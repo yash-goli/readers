@@ -4,6 +4,7 @@ from api import Amazon
 import requests, xmltodict, json
 from django.conf import settings
 import collections
+import urllib
 # Create your views here.
 def get_book_data(request):
     isbn_urls = {
@@ -11,7 +12,7 @@ def get_book_data(request):
         'google' : 'https://www.googleapis.com/books/v1/volumes?q=isbn:',
     }
 
-    SERVICE_DOMAINS = ['US', 'IN', 'UK', 'CA', 'CN', 'DE', 'ES', 'FR', 'IT', 'JP']
+    SERVICE_DOMAINS = ['IN', 'US', 'UK', 'CA', 'CN', 'DE', 'ES', 'FR', 'IT', 'JP']
 
     data = {
         'image' : '',
@@ -21,6 +22,8 @@ def get_book_data(request):
         'isbn_13' : '',
         'description' : '',
         'author' : '',
+        'binding' : '',
+        'pages': '',
         'subject' : [],
     }
 
@@ -33,12 +36,20 @@ def get_book_data(request):
     def from_amazon(book):
         desc = ""
 
-        data['image'] = book['LargeImage']['URL']
         data["title"] = book["ItemAttributes"]["Title"]
+        # data['image'] = urllib.urlretrieve(book['LargeImage']['URL'],'images/books/')
+        data['image'] = book['LargeImage']['URL']
         if "Publisher" in book["ItemAttributes"]:
             data["publisher"] = book["ItemAttributes"]["Publisher"]
         else:
             data["publisher"] = ""
+        
+        data["binding"] = book["ItemAttributes"]["Binding"]
+
+        if "NumberOfPages" in book["ItemAttributes"]:
+            data["pages"] = book["ItemAttributes"]["NumberOfPages"]
+        else:
+            data["pages"] = ""
 
         if "EAN" in book["ItemAttributes"]:
             data["isbn_13"] = book["ItemAttributes"]["EAN"]
@@ -169,6 +180,7 @@ def get_book_data(request):
             'error' : 'Unable to Find Data in any of our sources,Enter field manually'
         }
     return HttpResponse(json.dumps(data))
+    # return HttpResponse(json.dumps(items))
 
 def get_tags(nodes):
     non_tags = ["Books","Subjects","Categories"]

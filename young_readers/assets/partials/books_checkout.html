@@ -1,0 +1,158 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-10 col-sm-push-1">
+			<div class="row">
+				<h2 class="txt-c f-36">Books Checkout</h2>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="row p-15 csr-p" ng-class="{'bdr-gray b-lite-grey1 f-dark-grey2': !books.head,'bdr-green b-lite-green f-lite-grey1': books.head }">
+						<h4 class="f-18 pl-15">
+							<i class="fa fa-check-circle" ng-if="books.head"></i>
+							{[to_orders.length]}
+							<span ng-if="to_orders.length > 1">&nbsp;Books</span>
+							<span ng-if="to_orders.length === 1">&nbsp;Book</span>
+						</h4>
+					</div>
+					<div class="row p-10 bdr-gray" ng-if="books.body">
+						<div class="col-xs-12">
+							<table>
+								<thead>
+									<tr class="b-lite-grey1">
+										<th colspan="2">Item</th>
+										<th>Quantity</th>
+										<th>Delivery</th>
+									</tr>
+								</thead>
+								<tbody class="orders">
+									<tr ng-repeat="to_order in to_orders" class="txt-c">
+										<td>
+											<img src="{[to_order.image]}" alt="{[to_order.title]}" class="orders--image">  
+										</td>
+										<td>
+											<span class='f-20 block'>
+												{[to_order.title]}
+											</span>
+											<span class='f-medium-grey2'>
+												{[to_order.cover_type]}
+											</span>
+										</td>
+										<td>
+											<input type="text" class="form-inputs book-qty" ng-model="to_order.quantity">
+										</td>
+										<td>
+											Book will be delivered by 
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xs-12 txt-r">
+							<button class="btn b-blue f-white" ng-click="to_addresses()">
+								Continue
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+				 	<div class="row p-15 csr-p" ng-class="{'bdr-gray b-lite-grey1 f-dark-grey2': !delivery.head , 'bdr-green b-lite-green f-lite-grey1': delivery.head}">
+						<h4 class="f-18 pl-15">
+							<i class="fa fa-check-circle" ng-if="delivery.head"></i>
+							Delivery Address
+						</h4>
+					</div>
+					<div class="row p-10 bdr-gray" ng-if="delivery.body">
+						<div class="col-xs-12">
+							<div class="col-xs-4" ng-repeat="my_address in my_addresses">
+								<div class="row b-lite-grey1 bdr-gray p-10" ng-class="{'bdr-gray': !my_address.is_delivered , 'bdr-green': my_address.is_delivered}">
+									<span class="block p-10 f-18 bdr-b f-dark-grey1">
+										<i class="fa fa-check-circle f-green" ng-if="my_address.is_delivered"></i>
+										{[my_address.addr_name]}
+									</span>
+									<span class="block p-10 bdr-b f-14 f-dark-grey1">
+										{[my_address.address]}
+										<br>
+										<span ng-if="my_address.landmark !== ''">
+											{[my_address.landmark]}<br>
+										</span>
+										{[my_address.pincode]}
+									</span>
+									<span class="block p-10 f-14 f-dark-grey1 bdr-b">
+										{[my_address.modile_no]}
+									</span>
+									<span class="block txt-c pt-15">
+										<button class="btn b-blue f-white" ng-click="to_be_delivered(my_address)">Deliver here</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 txt-c p-10">
+							<button class="btn b-blue f-white" ng-click="add_address()"><i class="fa fa-plus"></i>&nbsp;Add Address</button>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-xs-12">
+				 	<div class="row p-15 csr-p" ng-class="{'bdr-gray b-lite-grey1 f-dark-grey2': !summary.head, 'bdr-green b-lite-green f-lite-grey1': !summary.head}">
+				 		<i class="fa fa-check-circle" ng-if="summary.head"></i>
+						<h4 class="f-18 pl-15">Order Summary</h4>
+					</div>
+					<div class="row p-10 bdr-gray" ng-if="summary.body">
+						<div class="col-xs-12">
+							<table>
+								<thead>
+									<tr class="b-lite-grey1">
+										<th colspan="2">Book</th>
+										<th>Quantity</th>
+									</tr>
+								</thead>
+								<tbody class="orders">
+									<tr ng-repeat="to_order in to_orders" class="txt-c">
+										<td>
+											<img src="{[to_order.image]}" alt="{[to_order.title]}" class="orders--image" style="width:50px;">  
+										</td>
+										<td>
+											<span class='block'>
+												{[to_order.title]}&nbsp;(English)
+											</span>
+											<span class='f-medium-grey2'>
+												{[to_order.cover_type]}
+											</span>
+										</td>
+										<td>
+											{[to_order.quantity]}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="row">
+								<h3 class="f-20">Shipping Address:</h3>
+								<span class="block pt-10 pl-5 f-18 f-dark-grey1">
+									{[delivery_addr.addr_name]}
+								</span>
+								<span class="block p-5 f-14 f-dark-grey1">
+									{[delivery_addr.address]}
+									<br>
+									<span ng-if="delivery_addr.landmark !== ''">
+										{[delivery_addr.landmark]}<br>
+									</span>
+									{[delivery_addr.pincode]}
+								</span>
+								<span class="block p-5 f-14 f-dark-grey1">
+									{[delivery_addr.modile_no]}
+								</span>
+							</div>
+						</div>
+						<div class="col-xs-12 txt-r p-10">
+							<span class="pull-l ml-5">
+								Send Confirmation SMS to +91
+								<input type="text" class="form-inputs" ng-model="cnf_mobile" ng-init="cnf_mobile = '9912201112'">
+							</span>
+							<button class="btn b-blue f-white" ng-click="place_order()">Place Order</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

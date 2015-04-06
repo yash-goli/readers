@@ -125,6 +125,24 @@ class TransactionsViewSet(CustomModelViewSet):
         serializer = TransactionsSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def populate(self, request, params, mode):
+        if mode == "create":
+            book_dtl = BookItemsDtl.objects.filter(book_id = params['data']['book_id'], available = True)
+            if len(book_dtl) != 0:
+                params['data']['barcode_id'] = book_dtl[0].pk
+            else:
+                return Response({'message':'Book is Out of Stock'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            params['data']['order_id'] = "ORD" + datetime.now().strftime('%m%d%y%H%M%S')
+            params['data']['date'] = datetime.now()
+            params['data']['dof_request'] = datetime.now()
+            return params['data']
+
+    def post_save(self, obj, created):
+        if created:
+            import pdb;pdb.set_trace()
+            wishlist_objs = Wishlist.objects.filter(book_id = obj.book_id, status = "order", user_id = obj.user_id)
+            for wishlist_obj in wishlist_objs:
+                wishlist_obj.delete()
 
     """ Admin can see any order detail but user can see his detail only """
     def retrieve(self, *args, **kwargs):
@@ -172,17 +190,32 @@ class WishlistViewSet(CustomModelViewSet):
     queryset = Wishlist.objects.all()
     permission_classes = [IsAuthenticatedPermission]
     parser = {
-        'default':WishlistSerializer
+        'default':WishlistSerializer,
     }
 
+    def filtering(self, params, queryset, user=None):
+        if "user_id" in params and params['user_id'] != "":
+            queryset = queryset.filter(user_id = params['user_id'])
+        if "status" in params and params['status'] != "":
+            queryset = queryset.filter(status = params['status'])
+        return queryset
+
     """ User can see his own Wishlist """
-    def list(self, *args, **kwargs):     
+    def list(self, *args, **kwargs):   
+        # import pdb;pdb.set_trace()  
         if self.request.user.is_superuser:   
             queryset = Wishlist.objects.all()
         else:
-            queryset = Wishlist.objects.filter(user_id = self.request.user.pk)
-        serializer = WishlistSerializer(queryset, many=True)
-        return Response(serializer.data)
+            if self.request.user.is_authenticated():
+                queryset = Wishlist.objects.all()
+                if 'user_id' in self.request.GET and self.request.GET['user_id'] != "":
+                    queryset = queryset.filter(user_id = self.request.GET['user_id'])
+                if 'status' in self.request.GET and self.request.GET['status'] != "":
+                    queryset = queryset.filter(status = self.request.GET['status'])
+                serializer = WishlistSerializer(queryset, many=True)
+                return Response(serializer.data)
+            else:
+                return Response({'message':'Invalid Operation'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     """ Only his Wishlist item will get retrieved """
     def retrieve(self, *args, **kwargs):
@@ -196,6 +229,9 @@ class WishlistViewSet(CustomModelViewSet):
 
     """ No one can update the wishlist """
     def update(self, *args, **kwargs):
-        return Response({'message':'Invalid Request'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        if self.request.user.is_authenticated():
+            return super(WishlistViewSet, self).update(*args, **kwargs)            
+        else:
+            return Response({'message':'Invalid Operation'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         

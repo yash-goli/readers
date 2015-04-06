@@ -1,0 +1,217 @@
+<div class="container">
+    <div class="row pt-20" ng-init="acc_tab='prl_info'">
+        <div class="col-sm-3">
+            <div class="row pb-0 orders">
+                <h1 class="b-blue f-white txt-l p-10">
+                    <i class="fa fa-shopping-cart"></i>&nbsp;My Orders
+                </h1>
+                <div class="row pt-0">
+                    <ul class="list-l noty--reg">
+                        <li ng-click="acc_tab='orders'">Orders</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row pb-0 orders">
+                <h1 class="b-blue f-white txt-l p-10">
+                    <i class="fa fa-shopping-cart"></i>&nbsp;My Stuff
+                </h1>
+                <div class="row pt-0">
+                    <ul class="list-l noty--reg">
+                        <li ng-click="acc_tab='wishlist'">My Wishlist</li>
+                        <li ng-click="acc_tab='subcription'">My Subscription</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row pb-0 settings">
+                <h1 class="b-blue f-white txt-l p-10">
+                    <i class="fa fa-cog"></i>&nbsp;My Settings
+                </h1>
+                <div class="row pt-0">
+                    <ul class="list-l noty--reg">
+                        <li ng-click="acc_tab='prl_info'">Personal Info</li>
+                        <li ng-click="acc_tab='chg_pwd'">Change Password</li>
+                        <li ng-click="acc_tab='addr'">Addresses</li>
+                        <li ng-click="acc_tab='deact_acc'">Deactivate Account</li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+        <div class="col-sm-9">
+            <div class="row pl-25" ng-show="acc_tab=='prl_info'">
+                <h2 class="f-dark-grey-2 f-28">  
+                    Personal Information
+                </h2>
+                <div class="row">
+                    <div class="col-sm-8 col-xs-12 pt-20">
+                        <input type="text" class="full-w form-inputs" placeholder="First Name" ng-model="first_name">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="text" class="full-w form-inputs" placeholder="Last Name" ng-model="last_name">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">+91</span> 
+                            <input type="text" class="full-w form-inputs" placeholder="Mobile Number" ng-model="mobile_no">
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <select ng-model="gender" class="col-lg-6 col-xs-12 form-inputs">
+                            <option value="Male" selected>Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10 txt-r">
+                        <button class="btn b-blue f-white" ng-click="save_chg.prl_info()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-25" ng-show="acc_tab=='chg_pwd'">
+                <h2 class="f-dark-grey-2 f-28">  
+                    Change Password
+                </h2>
+                <div class="row">
+                    <div class="col-sm-8 col-xs-12 pt-20">
+                        <input type="password" class="full-w form-inputs" placeholder="Old Password" ng-model="old_pwd">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="password" class="full-w form-inputs" placeholder="New Password" ng-model="password">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="password" class="full-w form-inputs" placeholder="Confirm Password" ng-model="cnf_pwd">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10 txt-r">
+                        <button class="btn b-blue f-white" ng-click="save_chg.chg_pwd()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-25" ng-show="acc_tab=='addr'">
+                <h2 class="f-dark-grey-2 f-28">  
+                    Add a New Address
+                </h2>
+                <div class="row">
+                    <div class="col-sm-8 col-xs-12 pt-20">
+                        <input type="text" class="full-w form-inputs" placeholder="Name" ng-model="name">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <textarea class="full-w form-inputs" placeholder="Street Address" maxlength="250" ng-model="address"></textarea>
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="text" class="full-w form-inputs" placeholder="Landmark" ng-model="landmark">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="text" disabled="disabled" ng-model="state" class="form-inputs">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="text" disabled="disabled" ng-model="country" class="form-inputs">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <input type="text" placeholder="Pincode" ng-model="pincode" class="form-inputs">
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">+91</span> 
+                            <input type="text" placeholder="Mobile Number" ng-model="address_mobile" class="form-inputs">
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-xs-12 pt-10 txt-r">
+                        <button class="btn b-blue f-white" ng-click="save_chg.addr()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-25" ng-show="acc_tab=='subcription'">
+                <div class="row" ng-if="!is_paid">
+                    <h2 class="f-dark-grey-2 f-28 pb-20">  
+                        My Subcriptions
+                    </h2>
+                    <div class="col-xs-4">
+                        <div class="row p-0 bdr-blue">
+                            <div class="row pt-0">
+                                <h1 class="b-blue p-20 f-28 txt-c f-white">
+                                    Basic
+                                </h1>
+                                <h2 class=" b-blue f-18 pb-20 txt-c f-white">
+                                    For 3 months
+                                </h2>
+                            </div>
+                            <div class="row">
+                                <h3 class="f-blue f-28 txt-c p-10">
+                                     Rs.<b>500</b>/-
+                                </h3>
+                            </div>
+                            <div class="row pl-20 pr-20">
+                                <ul class="list-c">
+                                    <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                                    <li><strong>Organized</strong> Layers and Folders</li>
+                                    <li><strong>Vector Based</strong> Graphics</li>
+                                    <li><strong>Documentation</strong></li>
+                                    <li><strong>Free Fonts</strong></li>
+                                </ul>
+                            </div>
+                            <div class="row txt-c">
+                                <button class="btn b-blue f-white" ng-click="payNow('basic')">Pay Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row p-0 bdr-green">
+                            <div class="row pt-0">
+                                <h1 class="b-green p-20 f-28 txt-c f-white">
+                                    Plus
+                                </h1>
+                                <h2 class=" b-green f-18 pb-20 txt-c f-white">
+                                    For 6 months
+                                </h2>
+                            </div>
+                            <div class="row">
+                                <h3 class="f-green f-28 txt-c p-10">
+                                     Rs.<b>800</b>/-
+                                </h3>
+                            </div>
+                            <div class="row pl-20 pr-20">
+                                <ul class="list-c">
+                                    <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                                    <li><strong>Organized</strong> Layers and Folders</li>
+                                    <li><strong>Vector Based</strong> Graphics</li>
+                                    <li><strong>Documentation</strong></li>
+                                    <li><strong>Free Fonts</strong></li>
+                                </ul>
+                            </div>
+                            <div class="row txt-c">
+                                <button class="btn b-green f-white" ng-click="payNow('plus')">Pay Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row p-0 bdr-red">
+                            <div class="row pt-0">
+                                <h1 class="b-red p-20 f-28 txt-c f-white">
+                                    Premium
+                                </h1>
+                                <h2 class=" b-red f-18 pb-20 txt-c f-white">
+                                    For 12 months
+                                </h2>
+                            </div>
+                            <div class="row">
+                                <h3 class="f-red f-28 txt-c p-10">
+                                     Rs.<b>1200</b>/-
+                                </h3>
+                            </div>
+                            <div class="row pl-20 pr-20">
+                                <ul class="list-c">
+                                    <li><strong>Photoshop 5.5+</strong> PSD File</li>
+                                    <li><strong>Organized</strong> Layers and Folders</li>
+                                    <li><strong>Vector Based</strong> Graphics</li>
+                                    <li><strong>Documentation</strong></li>
+                                    <li><strong>Free Fonts</strong></li>
+                                </ul>
+                            </div>
+                            <div class="row txt-c">
+                                <button class="btn b-red f-white" ng-click="payNow('premium')">Pay Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

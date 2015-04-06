@@ -1,5 +1,5 @@
 from django.db import models
-from core.authentication.models import Users
+from core.authentication.models import Users, Addresses
 
 class BookItems(models.Model):
     book_id = models.AutoField(primary_key = True) 
@@ -7,8 +7,9 @@ class BookItems(models.Model):
     ISBN_13 = models.CharField(max_length = 13, blank = True, null = True)
     title = models.CharField(max_length = 60)
     author = models.CharField(max_length = 30)
-    item_type = models.CharField(max_length = 30, blank = True, null = True)
+    item_type = models.CharField(max_length = 30, blank = True, null = True, default = "book")
     cover_type = models.CharField(max_length = 30)
+    pages = models.IntegerField(default = 1)
     image = models.URLField()
     book_rented_count = models.IntegerField(default = 0) 
     rent_price = models.CharField(max_length = 10, blank = True, null = True)
@@ -46,6 +47,7 @@ class Subscriptions(models.Model):
     status = models.CharField(max_length = 30)
     amount = models.CharField(max_length = 30)
     payment_id = models.CharField(max_length = 50)
+    books_hold = models.IntegerField(default = 1)
     sub_st_date = models.DateTimeField()
     sub_end_date = models.DateTimeField()
 
@@ -53,12 +55,15 @@ class Subscriptions(models.Model):
         db_table = "subscriptions"
 
 class Transactions(models.Model):
+    order_id = models.CharField(unique=True, max_length = 20)
     user_id = models.ForeignKey(Users)
-    isbn = models.ForeignKey(BookItems, related_name = "isbn")
+    book_id = models.ForeignKey(BookItems, related_name = "isbn")
     barcode_id = models.ForeignKey(BookItemsDtl)
+    address_id = models.ForeignKey(Addresses)
     date = models.DateTimeField(null = True)
     age = models.CharField(max_length = 10, null = True)
     action = models.CharField(max_length = 10)
+    quantity = models.IntegerField(default = 1)
     dof_request = models.DateTimeField(null = True)
     dof_deliver = models.DateTimeField(null = True)
     dof_returned = models.DateTimeField(null = True)
@@ -72,6 +77,7 @@ class Wishlist(models.Model):
     audit_dttm = models.DateTimeField(null = True)
     book_name = models.CharField(max_length = 100)
     status = models.CharField(max_length = 20)
-
+    quantity = models.IntegerField(default = 1)
+    
     class Meta:
         db_table = "wishlist"
