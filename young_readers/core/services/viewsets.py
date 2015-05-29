@@ -139,7 +139,6 @@ class TransactionsViewSet(CustomModelViewSet):
 
     def post_save(self, obj, created):
         if created:
-            import pdb;pdb.set_trace()
             wishlist_objs = Wishlist.objects.filter(book_id = obj.book_id, status = "order", user_id = obj.user_id)
             for wishlist_obj in wishlist_objs:
                 wishlist_obj.delete()

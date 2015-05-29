@@ -296,7 +296,8 @@ mainApp.controller('booksAddController', ['$scope', 'Constants', '$timeout', '$h
             'description': '',
             'subject': '',
             'book_penalty': '',
-            'total_count': ''
+            'total_count': '',
+            'available_count': '',
         };
         $scope.cover_types = [
             {'name': 'Paperback', 'value': 'Paperback'}, 
@@ -325,7 +326,6 @@ mainApp.controller('booksAddController', ['$scope', 'Constants', '$timeout', '$h
                 };
         
             $http(options).success(function (data) {
-                console.log(data)
                 $scope.is_book = true;
                 $scope.book_data.ISBN_10 = data.isbn_10;
                 $scope.book_data.ISBN_13 = data.isbn_13;
@@ -354,6 +354,7 @@ mainApp.controller('booksAddController', ['$scope', 'Constants', '$timeout', '$h
             var deferer = $q.defer();
             var promise = deferer.promise;
             $scope.book_data.subject = "";
+            $scope.book_data.available_count = $scope.book_data.total_count;
             $scope.tags.forEach(function (val) {
                 $scope.book_data.subject = $scope.book_data.subject + "-" + val;
             });
@@ -394,7 +395,6 @@ mainApp.controller('booksAddController', ['$scope', 'Constants', '$timeout', '$h
 // Books List Controller
 mainApp.controller('booksListController', ['$scope', 'Constants', '$timeout', '$http', 'growl',
     function ($scope, Constants, $timeout, $http, growl) {
-
         $scope.getBookDetails = function () {
 
         };

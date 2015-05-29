@@ -4,20 +4,20 @@
 @include font(Lato);
 @include reset();
 $color : (
-    green: #37BC9B,
-    lite-green:#48CFAD,
-    dark_blue: #3D3E52,
-    red: #FC6E51,
-    lite-red:#E9573F,
-    white:#fff,
-    lite-grey1:#F5F7FA, 
-    lite-grey2:#E6E9ED,
-    medium-grey1:#CCD1D9, 
-    medium-grey2:#AAB2BD,
-    dark-grey1:#656D78, 
-    dark-grey2:#434A54,
-    blue:#4A89DC,
-    lite-blue:#5D9CEC,
+    'green': #37BC9B,
+    'lite-green':#48CFAD,
+    'dark_blue': #3D3E52,
+    'red': #FC6E51,
+    'lite-red':#E9573F,
+    'white':#fff,
+    'lite-grey1':#F5F7FA, 
+    'lite-grey2':#E6E9ED,
+    'medium-grey1':#CCD1D9, 
+    'medium-grey2':#AAB2BD,
+    'dark-grey1':#656D78, 
+    'dark-grey2':#434A54,
+    'blue':#4A89DC,
+    'lite-blue':#5D9CEC,
 );
 $txt : (
     'txt-c' : center,
@@ -35,10 +35,10 @@ html{
 }
 html,body{
     height: 100%;
-    color: map-get($color, dark-grey2);
+    color: map-get($color, 'dark-grey2');
 }
 a {
-    color: map-get($color, dark-grey2);
+    color: map-get($color, 'dark-grey2');
     text-decoration: none;
 }
 p{
@@ -90,8 +90,8 @@ textarea{font-family:Lato;height: auto;resize:none;}
     background-image: none;
     border: 1px solid transparent;}
 button[disabled],input[disabled]{
-    background-color: map-get($color, lite-grey2);;
-    border-color: map-get($color, lite-grey2);;
+    background-color: map-get($color, 'lite-grey2');;
+    border-color: map-get($color, 'lite-grey2');;
 }
 img {
     border: 0;
@@ -154,14 +154,14 @@ label,.sub{
 }
 .under{text-decoration: underline;}
 .h-under:hover, .h-under:active{
-    color: map-get($color, blue);
+    color: map-get($color, 'blue');
     text-decoration: underline;}
 .ng-hide{
     position: absolute;
     left: -9999px;
 }
 
-.bd{border: 1px solid map-get($color, white);}
+.bd{border: 1px solid map-get($color, 'white');}
 @each $name, $value in $color {
     .f-#{$name}{
         color: $value;
@@ -244,13 +244,13 @@ table {
                 Login Style     
 ========================================================*/
 .login-wrap{
-    border:1px solid map-get($color, lite-grey2);
+    border:1px solid map-get($color, 'lite-grey2');
     .login-header{
-        border-bottom: 1px solid map-get($color, lite-grey2);
+        border-bottom: 1px solid map-get($color, 'lite-grey2');
         cursor: pointer;
     }
     .login-header div:nth-of-type(1){
-        border-right: 1px solid map-get($color, lite-grey2);
+        border-right: 1px solid map-get($color, 'lite-grey2');
     }
 }
 
@@ -277,7 +277,7 @@ header{
         display: inline-block;
         margin: 0px 10px;
         i{
-            color: map-get($color, white);
+            color: map-get($color, 'white');
             font-size: 1.25em;
         }
         .noty{
@@ -310,8 +310,8 @@ header{
         right: 0;
         top:100%;
 
-        background-color: map-get($color, white);
-        border : 1px solid map-get($color, lite-grey2);
+        background-color: map-get($color, 'white');
+        border : 1px solid map-get($color, 'lite-grey2');
 
         width: 180px;
         z-index: 1;
@@ -324,8 +324,8 @@ header{
                 margin-right:10px;
             }
             &:hover, &:hover a{
-                background-color: map-get($color, blue);
-                color: map-get($color, white);
+                background-color: map-get($color, 'blue');
+                color: map-get($color, 'white');
             }
         }
     }
@@ -369,14 +369,14 @@ header{
 
 .books-wrapper{
     h2{
-        border-top:2px solid map-get($color, dark-grey2);
-        border-bottom:2px solid map-get($color, dark-grey2);
+        border-top:2px solid map-get($color, 'dark-grey2');
+        border-bottom:2px solid map-get($color, 'dark-grey2');
     }
     .book-wrap{
         position: relative;
         width: 100%;
         height: 300px;
-        border:1px solid map-get($color, lite-grey2);
+        border:1px solid map-get($color, 'lite-grey2');
         padding: 0px;
         .book-img{
             width: 100%;
@@ -417,16 +417,16 @@ header{
 }
 
 .noty--reg{
-    border: 1px solid map-get($color, blue);
+    border: 1px solid map-get($color, 'blue');
 }
-.bdr-red{@include border(red);}
-.bdr-green{@include border(green);}
-.bdr-blue{@include border(blue);}
-.bdr-gray{@include border(lite-grey2);}
-.bdr-t{border-top: 1px solid map-get($color, lite-grey2);}
-.bdr-b{border-bottom: 1px solid map-get($color, lite-grey2);}
-.bdr-l{border-left: 1px solid map-get($color, lite-grey2);}
-.bdr-r{border-right: 1px solid map-get($color, lite-grey2);}
+.bdr-red{@include border('red');}
+.bdr-green{@include border('green');}
+.bdr-blue{@include border('blue');}
+.bdr-gray{@include border('lite-grey2');}
+.bdr-t{border-top: 1px solid map-get($color, 'lite-grey2');}
+.bdr-b{border-bottom: 1px solid map-get($color, 'lite-grey2');}
+.bdr-l{border-left: 1px solid map-get($color, 'lite-grey2');}
+.bdr-r{border-right: 1px solid map-get($color, 'lite-grey2');}
 .disc{
     list-style: disc;
 }
@@ -435,7 +435,7 @@ header{
         text-align: $txt;
         font-size: $size;
         padding: 10px;
-        border-bottom: 1px solid map-get($color, blue);
+        border-bottom: 1px solid map-get($color, 'blue');
         &:last-child{
             border-width: 0px;
         }
@@ -450,7 +450,7 @@ header{
         cursor: pointer;
         &:hover{
             color: #fff;
-            background-color: map-get($color, lite-blue);
+            background-color: map-get($color, 'lite-blue');
         }
     }
 }

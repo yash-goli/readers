@@ -52,7 +52,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.authentication.auth_middleware.LoginRequired',
 )
 
 ROOT_URLCONF = 'young_readers.urls'
